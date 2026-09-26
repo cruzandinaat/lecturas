@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="robots" content="noindex, nofollow">
+<meta name="googlebot" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Revolución Solar · Informe personal</title>
+<link rel="stylesheet" href="_ds/cruz-andina-design-system-9e29b00d-83c2-4ff6-b907-f9d2bb6bc278/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/cruz-andina-design-system-9e29b00d-83c2-4ff6-b907-f9d2bb6bc278/tokens/colors.css">
+<link rel="stylesheet" href="_ds/cruz-andina-design-system-9e29b00d-83c2-4ff6-b907-f9d2bb6bc278/tokens/typography.css">
+<link rel="stylesheet" href="_ds/cruz-andina-design-system-9e29b00d-83c2-4ff6-b907-f9d2bb6bc278/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/cruz-andina-design-system-9e29b00d-83c2-4ff6-b907-f9d2bb6bc278/tokens/base.css">
+<link rel="stylesheet" href="_ds/cruz-andina-design-system-9e29b00d-83c2-4ff6-b907-f9d2bb6bc278/styles.css">
+<script src="_ds/cruz-andina-design-system-9e29b00d-83c2-4ff6-b907-f9d2bb6bc278/_ds_bundle.js"></script>
+<script src="./image-slot.js"></script>
+<style>
+:root{--astro-aries:var(--red-500);--astro-leo:var(--red-100);--astro-sagittarius:var(--red-900);--astro-taurus:var(--green-500);--astro-virgo:var(--green-100);--astro-capricorn:var(--green-900);--astro-gemini:var(--gold-100);--astro-libra:var(--gold-900);--astro-aquarius:var(--gold-500);--astro-cancer:var(--blue-100);--astro-scorpio:var(--blue-900);--astro-pisces:var(--blue-500);--astro-neutral:var(--ink-300);--space-xs:.5rem;--space-sm:1rem;--space-md:2rem;--space-lg:clamp(3rem,6vw,5rem);--space-xl:clamp(5rem,10vw,9rem);--space-2xl:clamp(6rem,12vw,14rem);--gutter:clamp(1.25rem,6vw,6rem);--container:1480px;--measure:58ch;--t-display:clamp(3rem,8vw,9rem);--t-h:clamp(2.5rem,5vw,6rem);--t-sub:clamp(28px,2.2vw,2.5rem);--t-body:clamp(28px,2.1vw,2.125rem);--t-micro:clamp(28px,1.4vw,1.75rem);--dur-micro:180ms;--dur-ui:300ms;--dur-reveal:800ms;--ease-out:cubic-bezier(.4,0,.2,1);--z-bg:0;--z-content:1;--z-fg:2;--z-nav:30;--z-overlay:40;--force-a:var(--red-100);--force-b:var(--blue-100);--force-3:var(--green-500);--force-3-light:var(--green-900);--line-dark:rgba(250,249,246,.14);--line-light:var(--paper-200)}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--ink-900);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:inherit;text-decoration:none}
+a:hover{color:inherit}
+:focus-visible{outline:2px solid var(--blue-100);outline-offset:4px}
+::selection{background:var(--blue-500);color:#fff}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{transition-duration:0ms!important;animation:none!important}}
+</style>
+</helmet>
+<div ref="{{ rootRef }}" style="position:relative;padding-left:{{ railPad }};box-sizing:border-box;min-height:100vh;background:{{ bg }};transition:background-color 900ms var(--ease-out);font-family:var(--font-sans-body);color:var(--paper-000);overflow-x:clip">
+
+<sc-if value="{{ railNav }}" hint-placeholder-val="{{ true }}">
+<nav aria-label="Índice del informe" style="position:fixed;left:1.5rem;top:50%;transform:translateY(-50%);z-index:30;display:flex;flex-direction:column;gap:4px;width:max-content">
+<sc-for list="{{ navItems }}" as="it" hint-placeholder-count="7">
+<a href="#{{ it.id }}" aria-label="{{ it.aria }}" aria-current="{{ it.current }}" title="{{ it.label }}" style="display:grid;grid-template-columns:14px 2.2em minmax(0,1fr);align-items:center;gap:8px;padding:7px 0;font-size:28px;line-height:1.2;font-variant-numeric:tabular-nums;color:{{ it.color }};transition:color 220ms var(--ease-out)" style-hover="color:{{ it.hover }}">
+<span style="display:block;height:1px;width:{{ it.tick }};background:currentColor;transition:width 300ms var(--ease-out)"></span>
+<span style="letter-spacing:.1em">{{ it.n }}</span>
+<span style="font-weight:{{ it.weight }};white-space:nowrap">{{ it.label }}</span>
+</a>
+</sc-for>
+</nav>
+</sc-if>
+
+<sc-if value="{{ buttonNav }}" hint-placeholder-val="{{ false }}">
+<button type="button" onClick="{{ openNav }}" aria-expanded="{{ navOpenStr }}" aria-controls="indice-movil" style="position:fixed;top:12px;right:12px;z-index:30;display:flex;align-items:center;gap:10px;min-height:44px;padding:0 16px;border-radius:999px;border:1px solid {{ navBorder }};background:{{ navBg }};color:{{ navInk }};font-family:var(--font-sans-body);font-size:28px;letter-spacing:.04em;cursor:pointer">
+<span style="font-variant-numeric:tabular-nums;letter-spacing:.14em">{{ curNum }}</span>
+<span>{{ curLabel }}</span>
+</button>
+</sc-if>
+
+<sc-if value="{{ navOpen }}" hint-placeholder-val="{{ false }}">
+<div id="indice-movil" role="dialog" aria-modal="true" aria-label="Índice" style="position:fixed;inset:0;z-index:40;background:{{ navBg }};color:{{ navInk }};display:flex;flex-direction:column;padding:20px var(--gutter) 32px">
+<div style="display:flex;justify-content:space-between;align-items:center;min-height:44px">
+<span style="font-size:28px;letter-spacing:.16em;text-transform:uppercase;color:{{ navDim }}">Índice</span>
+<button type="button" onClick="{{ closeNav }}" aria-label="Cerrar índice" style="width:44px;height:44px;border:0;background:transparent;color:inherit;font-size:34px;line-height:1;cursor:pointer">×</button>
+</div>
+<ol style="list-style:none;margin:auto 0;padding:0;display:flex;flex-direction:column;gap:6px">
+<sc-for list="{{ navItems }}" as="it" hint-placeholder-count="7">
+<li><a href="#{{ it.id }}" onClick="{{ closeNav }}" style="display:flex;align-items:baseline;gap:14px;padding:10px 0;border-top:1px solid {{ navBorder }}">
+<span style="font-size:28px;letter-spacing:.14em;color:{{ navDim }};font-variant-numeric:tabular-nums">{{ it.n }}</span>
+<span style="font-family:var(--font-serif-display);font-size:34px;line-height:1.15">{{ it.label }}</span>
+</a></li>
+</sc-for>
+</ol>
+</div>
+</sc-if>
+
+<a href="#cap-00" aria-label="Cruz Andina · volver al inicio" style="position:fixed;top:12px;left:{{ brandLeft }};z-index:30;display:flex;align-items:center;gap:12px;min-height:44px;padding:4px 18px 4px 6px;border-radius:999px;border:1px solid {{ navBorder }};background:{{ navBg }};opacity:{{ brandOp }};pointer-events:{{ brandPe }};transition:opacity 300ms var(--ease-out),background-color 900ms var(--ease-out)">
+<span style="display:block;width:44px;height:44px;overflow:hidden;flex:none"><img src="assets/cruz-andina-icono.png" alt="" style="display:block;width:88px;height:88px;margin:-22px"></span>
+<span role="img" aria-label="Cruz Andina" style="display:block;height:20px;aspect-ratio:742 / 100;background-color:{{ navInk }};-webkit-mask:url(assets/cruz-andina-wordmark-blanco.png) center / contain no-repeat;mask:url(assets/cruz-andina-wordmark-blanco.png) center / contain no-repeat;transition:background-color 900ms var(--ease-out)"></span>
+</a>
+
+<!-- 00 UMBRAL -->
+<header id="cap-00" data-chapter="0" data-screen-label="00 Umbral" style="position:relative;min-height:100svh;overflow:hidden;display:flex">
+<div ref="{{ chartRef }}" style="position:absolute;left:{{ chartLeft }};top:{{ chartTop }};width:{{ chartSize }};height:{{ chartSize }};transform:translate(-50%,-50%);z-index:0;will-change:transform">
+<div aria-hidden="true" style="position:absolute;inset:0;border-radius:50%;border:1px solid rgba(250,249,246,.10)"></div>
+<div aria-hidden="true" style="position:absolute;inset:6%;border-radius:50%;border:1px solid rgba(250,249,246,.16)"></div>
+<div aria-hidden="true" style="position:absolute;inset:24%;border-radius:50%;border:1px solid rgba(250,249,246,.08)"></div>
+<div style="position:absolute;inset:11%;opacity:.9">
+<image-slot id="rs-carta" shape="circle" fit="contain" placeholder="Carta de Revolución Solar — asset pendiente (arrastra la imagen real)"></image-slot>
+</div>
+</div>
+<div style="position:relative;z-index:1;width:100%;max-width:1480px;margin:0 auto;padding:clamp(6rem,14svh,8rem) var(--gutter) clamp(2rem,7svh,5rem);box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;gap:4rem;pointer-events:none">
+<div style="display:flex;flex-direction:column;align-items:flex-start;gap:1.25rem">
+<img data-intro="0" src="assets/cruz-andina-lockup-blanco.png" alt="Cruz Andina · Astrología Terapéutica" style="display:block;width:clamp(140px,12vw,180px);height:auto;margin-bottom:1rem">
+<h1 data-intro="0" style="margin:0;display:flex;flex-wrap:wrap;align-items:baseline;gap:.4rem 1.5rem;font-weight:400">
+<span style="font-size:clamp(28px,1.9vw,30px);letter-spacing:.16em;text-transform:uppercase;color:var(--paper-200)">Revolución Solar</span>
+<span style="font-family:var(--font-serif-display);font-style:italic;font-weight:400;font-size:clamp(2.25rem,4vw,4rem);line-height:1;color:var(--paper-000)">Fabrizzio</span>
+
+</h1>
+<span style="font-size: clamp(28px,1.9vw,30px); letter-spacing: .16em; color: var(--paper-200); font-variant-numeric: tabular-nums; font-family: &quot;Ivy Ora Display&quot;, Georgia, serif">2025–2026</span>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr));gap:2.5rem 4rem;align-items:end">
+<p data-intro="400" style="grid-column:1 / -1;margin:0;max-width:15ch;font-family:var(--font-serif-display);font-weight:400;font-size:clamp(2.75rem,5vw,6rem);line-height:1.02;letter-spacing:-.015em;color:var(--paper-000);text-wrap:balance;max-width:11ch">Una vista la energía de <em style="font-style: italic; font-weight: 300; color: var(--gold-100);">tu nuevo año.</em></p>
+<dl data-intro="900" style="margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 18px;font-size:28px;line-height:1.5;color:var(--paper-100);max-width:26rem">
+<dt style="font-size:28px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-300);padding-top:2px">Ciclo iniciado</dt>
+<dd style="margin:0">11 de octubre de 2025</dd>
+<dt style="font-size:28px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-300);padding-top:2px">Hora</dt>
+<dd style="margin:0;font-variant-numeric:tabular-nums">01:08:20</dd>
+<dt style="font-size:28px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-300); padding-top: 2px; width: 305px; height: 74px">Lugar de cálculo</dt>
+<dd style="margin: 0; width: 389px; height: 43px">Monterrey, Nuevo León, México</dd>
+</dl>
+</div>
+</div>
+</header>
+
+<section aria-label="Umbral" data-chapter="0" style="max-width:1480px;margin:0 auto;padding:var(--space-2xl) var(--gutter);box-sizing:border-box;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:0 1.5rem">
+<p data-reveal="0" style="grid-column:{{ colWide }};margin:0;font-family:var(--font-serif-display);font-weight:400;font-size:clamp(28px,2.8vw,3rem);line-height:1.22;color:var(--paper-000);text-wrap:pretty">Este ciclo concentra una pregunta: cómo permitir que una idea, una obra o una posición propia <span style="text-decoration:underline;text-decoration-color:var(--astro-libra);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">reciba respuesta del mundo</span> <span style="text-decoration:underline;text-decoration-color:var(--astro-capricorn);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">sin entregar a esa respuesta la autoridad sobre su forma</span>.</p>
+<p data-reveal="150" style="grid-column:{{ colText }};margin:var(--space-lg) 0 0;font-size:var(--t-body);line-height:1.7;color:var(--paper-100);max-width:var(--measure);text-wrap:pretty">La lectura no anuncia acontecimientos. Observa el punto donde <span style="text-decoration:underline;text-decoration-color:var(--astro-cancer);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">protección y aislamiento empiezan a parecerse</span>; donde <span style="text-decoration:underline;text-decoration-color:var(--astro-scorpio);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">profundidad puede convertirse en control</span>; y donde el deseo de calidad retrasa la experiencia que ayudaría a encontrarla.</p>
+</section>
+
+<!-- 01 EL MOVIMIENTO CENTRAL -->
+<section id="cap-01" data-chapter="1" data-screen-label="01 El movimiento central" aria-labelledby="t01" style="max-width:1480px;margin:0 auto;padding:var(--space-xl) var(--gutter) 0;box-sizing:border-box">
+<p data-reveal="0" style="margin:0 0 2rem;font-size:28px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-300)"><span style="font-variant-numeric:tabular-nums;color:var(--blue-100)">01</span> — <span id="t01">El movimiento central</span></p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,26rem),1fr));gap:3rem clamp(2rem,6vw,8rem);align-items:start">
+<div data-reveal="100">
+<p style="margin:0 0 2rem;font-size:var(--t-body);line-height:1.7;color:var(--paper-100);max-width:52ch">Estás leyendo esto cerca del final del ciclo. La carta ya no funciona solamente como posibilidad. Puede colocarse junto a lo vivido y preguntar:</p>
+<h2 style="margin:0;font-family:var(--font-serif-display);font-weight:400;font-size:var(--t-h);line-height:1.02;letter-spacing:-.01em;color:var(--paper-000);text-wrap:balance">¿Reconoces el mecanismo?</h2>
+</div>
+<div data-reveal="250" style="display:flex;flex-direction:column;gap:1.25rem;font-size:var(--t-body);line-height:1.7;color:var(--paper-100);max-width:var(--measure);padding-top:clamp(0rem,6vw,6rem)">
+<p style="margin:0">No hace falta que cada símbolo haya aparecido de manera literal. Lo importante es observar <span style="text-decoration:underline;text-decoration-color:var(--astro-aquarius);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">si varias experiencias compartieron una misma estructura</span>.</p>
+<p style="margin:0">Algo que se estaba formando necesitaba <span style="text-decoration:underline;text-decoration-color:var(--astro-libra);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">salir de la elaboración privada y entrar en relación</span>. No necesariamente hacerse público. Entrar en relación puede significar nombrarlo, explicarlo, enseñarlo a una persona, poner una versión a prueba o permitir que una idea encuentre resistencia fuera de tu mente.</p>
+</div>
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));gap:2.5rem clamp(2rem,6vw,8rem);margin-top:var(--space-xl)">
+<p data-reveal="0" style="margin:0;font-family:var(--font-serif-display);font-size:clamp(1.75rem,2.6vw,2.75rem);line-height:1.3;color:var(--paper-000);text-wrap:pretty"><span style="display:block;margin-bottom:.75rem;font-family:var(--font-sans-body);font-size:28px;letter-spacing:.16em;text-transform:uppercase;color:var(--red-100)">Un extremo</span>Una obra protegida de toda respuesta conserva su forma original. También conserva <span style="text-decoration:underline;text-decoration-color:var(--astro-capricorn);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">los errores que solo aparecen cuando toca la realidad</span>.</p>
+<p data-reveal="150" style="margin:0;font-family:var(--font-serif-display);font-size:clamp(1.75rem,2.6vw,2.75rem);line-height:1.3;color:var(--paper-000);text-wrap:pretty"><span style="display:block;margin-bottom:.75rem;font-family:var(--font-sans-body);font-size:28px;letter-spacing:.16em;text-transform:uppercase;color:var(--blue-100)">El otro extremo</span>El otro extremo tampoco ayuda. Si algo todavía frágil recibe demasiadas miradas, cada opinión puede entrar <span style="text-decoration:underline;text-decoration-color:var(--astro-leo);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">antes de que exista un centro desde el cual responder</span>. Entonces la conversación deja de informar la obra y <span style="text-decoration:underline;text-decoration-color:var(--astro-neutral);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">comienza a definirla</span>.</p>
+</div>
+
+<p data-reveal="0" style="margin:var(--space-xl) 0 0;max-width:32rem;font-size:28px;line-height:1.5;color:var(--ink-300)">El mapa sitúa el trabajo del año entre esos dos extremos.</p>
+<figure data-reveal="0" aria-label="Protección y contacto: dos extremos y una tercera coordenada" style="position:relative;margin:clamp(9rem,14vw,11rem) 0 clamp(9rem,14vw,11rem);height:clamp(460px,78svh,760px);max-width:1180px">
+<svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible">
+<line x1="10" y1="12" x2="10" y2="88" vector-effect="non-scaling-stroke" style="stroke:rgba(250,249,246,.38);stroke-width:1"></line>
+<line x1="8.8" y1="50" x2="11.2" y2="50" vector-effect="non-scaling-stroke" style="stroke:rgba(250,249,246,.38);stroke-width:1"></line>
+<line x1="10" y1="12" x2="60" y2="50" vector-effect="non-scaling-stroke" style="stroke:var(--green-500);stroke-width:1;opacity:.7"></line>
+<line x1="10" y1="88" x2="60" y2="50" vector-effect="non-scaling-stroke" style="stroke:var(--green-500);stroke-width:1;opacity:.7"></line>
+</svg>
+<span aria-hidden="true" style="position:absolute;left:10%;top:12%;width:12px;height:12px;border-radius:50%;background:var(--red-100);transform:translate(-50%,-50%)"></span>
+<span aria-hidden="true" style="position:absolute;left:10%;top:88%;width:12px;height:12px;border-radius:50%;background:var(--blue-100);transform:translate(-50%,-50%)"></span>
+<span aria-hidden="true" style="position:absolute;left:60%;top:50%;width:14px;height:14px;border-radius:50%;background:var(--green-500);outline:1px solid var(--green-500);outline-offset:8px;transform:translate(-50%,-50%)"></span>
+<div style="position:absolute;left:calc(10% - 6px);bottom:calc(88% + 22px);max-width:calc(90% - 16px)">
+<p style="margin:0;font-family:var(--font-serif-display);font-size:var(--t-sub);line-height:1;color:var(--paper-000)">Protección</p>
+<p style="margin:6px 0 0;font-size:28px;letter-spacing:.16em;text-transform:uppercase;color:var(--red-100)">Extremo · aislamiento</p>
+</div>
+<div style="position:absolute;left:calc(10% - 6px);top:calc(88% + 22px);max-width:calc(90% - 16px)">
+<p style="margin:0;font-family:var(--font-serif-display);font-size:var(--t-sub);line-height:1;color:var(--paper-000)">Contacto</p>
+<p style="margin:6px 0 0;font-size:28px;letter-spacing:.16em;text-transform:uppercase;color:var(--blue-100)">Extremo · exposición indiscriminada</p>
+</div>
+<sc-if value="{{ tfWide }}" hint-placeholder-val="{{ true }}"><div style="position:absolute;left:calc(60% + 36px);top:50%;transform:translateY(-50%);max-width:min(24rem,calc(40% - 36px))">
+<p style="margin:0;font-size:28px;letter-spacing:.16em;text-transform:uppercase;color:var(--green-500)">Tercera fuerza</p>
+<p style="margin:8px 0 0;font-family:var(--font-serif-display);font-style:italic;font-size:var(--t-sub);line-height:1.05;color:var(--paper-000)">Presencia graduada</p>
+<p style="margin:8px 0 0;font-size:28px;line-height:1.5;color:var(--paper-100)">Contacto diseñado: no el punto medio del eje, sino una coordenada nueva.</p>
+</div></sc-if>
+</figure>
+<sc-if value="{{ tfNarrow }}" hint-placeholder-val="{{ false }}"><div style="margin-top:2rem;max-width:32rem;padding-top:1.25rem;border-top:1px solid var(--green-500)">
+<p style="margin:0;font-size:28px;letter-spacing:.16em;text-transform:uppercase;color:var(--green-500)">Tercera fuerza</p>
+<p style="margin:8px 0 0;font-family:var(--font-serif-display);font-style:italic;font-size:var(--t-sub);line-height:1.05;color:var(--paper-000)">Presencia graduada</p>
+<p style="margin:8px 0 0;font-size:28px;line-height:1.5;color:var(--paper-100)">Contacto diseñado: no el punto medio del eje, sino una coordenada nueva.</p>
+</div></sc-if>
+
+<div style="display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:0 1.5rem;margin-top:var(--space-xl)">
+<p data-reveal="0" style="grid-column:{{ colText }};margin:0;font-size:var(--t-body);line-height:1.75;color:var(--paper-100);max-width:var(--measure);text-wrap:pretty">Hay deseo de expresión y participación. Hay una zona íntima que no quiere quedar expuesta sin medida. Hay intensidad suficiente para profundizar y sostener una tarea difícil. Hay una mente capaz de abrir rutas nuevas, aunque no todas puedan comprobarse al mismo tiempo. Y hay <span style="text-decoration:underline;text-decoration-color:var(--astro-capricorn);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">un criterio de calidad que puede dar estructura o mover la meta</span> cada vez que te acercas.</p>
+</div>
+</section>
+
+<section aria-label="Etapas de un mismo proceso" data-chapter="1" style="min-height:100svh;display:flex;align-items:center;justify-content:center;padding:var(--space-xl) var(--gutter);box-sizing:border-box;text-align:center">
+<p style="margin:0;font-family:var(--font-serif-display);font-weight:400;font-size:var(--t-h);line-height:1.08;color:var(--paper-000);text-wrap:balance"><span data-reveal="0" style="display:block;color:var(--ink-300)">Estas no son cinco historias.</span><span data-reveal="500" style="display:block;margin-top:.35em"><span style="text-decoration:underline;text-decoration-color:var(--astro-aquarius);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">Son etapas de un mismo proceso.</span></span></p>
+</section>
+
+<section aria-label="El proceso" data-chapter="1" style="max-width:1480px;margin:0 auto;padding:0 var(--gutter) var(--space-xl);box-sizing:border-box;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,24rem),1fr));gap:2.5rem clamp(2rem,6vw,8rem)">
+<p data-reveal="0" style="margin:0;font-size:var(--t-body);line-height:1.75;color:var(--paper-100);max-width:var(--measure)">Lo que busca expresión toca algo personal. Al tocarlo, aumenta la intensidad. La intensidad quiere reducir la incertidumbre. La mente produce más posibilidades. El criterio intenta ordenar el campo. Si el criterio no tiene un límite previo, el trabajo puede seguir mejorando <span style="text-decoration:underline;text-decoration-color:var(--astro-capricorn);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">sin llegar nunca a una forma compartible</span>.</p>
+<p data-reveal="150" style="margin:0;font-size:var(--t-body);line-height:1.75;color:var(--ink-300);max-width:var(--measure)">Es como si quisieras mostrar una pieza en la que has trabajado durante meses. Antes de enseñarla corriges un detalle; ese detalle obliga a revisar otro; la nueva revisión cambia el criterio con el que juzgas lo anterior. El trabajo no se detiene por falta de dedicación. Se detiene porque nunca se decidió qué debía estar resuelto para que una primera versión pudiera encontrarse con una primera mirada.</p>
+</section>
+
+<section aria-label="El asunto" data-chapter="1" style="max-width:1480px;margin:0 auto;padding:var(--space-xl) var(--gutter) var(--space-2xl);box-sizing:border-box">
+<blockquote data-reveal="0" style="margin:0;max-width:18ch;font-family:var(--font-serif-display);font-weight:400;font-size:clamp(2.4rem,5.4vw,6.25rem);line-height:1.04;letter-spacing:-.01em;color:var(--paper-000);text-wrap:balance">El asunto no es cuánto mostrar. <em style="font-weight:300;color:var(--paper-100)">Es decidir <span style="text-decoration:underline;text-decoration-color:var(--astro-libra);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">qué tipo de contacto necesita cada etapa del proceso</span>.</em></blockquote>
+<div style="display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:0 1.5rem;margin-top:var(--space-lg)">
+<div data-reveal="200" style="grid-column:{{ colText }};display:flex;flex-direction:column;gap:1.25rem;font-size:var(--t-body);line-height:1.75;color:var(--paper-100);max-width:var(--measure)">
+<p style="margin:0"><span style="text-decoration:underline;text-decoration-color:var(--astro-aries);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">Esta distinción devuelve agencia.</span> Una conversación puede servir para descubrir una dirección. Otra, para revisar una estructura. Otra puede ser prematura. La apertura deja de ser una cualidad moral y se convierte en <span style="text-decoration:underline;text-decoration-color:var(--astro-libra);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">una decisión de contexto</span>.</p>
+<p style="margin:0;color:var(--paper-000)">El foco del ciclo parece estar en esa decisión.</p>
+</div>
+</div>
+</section>
+
+<!-- 02 TU VOZ Y LA RESPUESTA -->
+<section id="cap-02" data-chapter="2" data-screen-label="02 Tu voz y la respuesta" aria-labelledby="t02" style="max-width:1480px;margin:0 auto;padding:var(--space-xl) var(--gutter);box-sizing:border-box;border-top:1px solid var(--line-dark)">
+<p data-reveal="0" style="margin:0 0 2rem;font-size:28px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-300)"><span style="font-variant-numeric:tabular-nums;color:var(--green-500)">02</span> — <span id="t02">Tu voz y la respuesta</span></p>
+<h2 data-reveal="100" style="margin:0;max-width:20ch;font-family:var(--font-serif-display);font-weight:400;font-size:clamp(2rem,3.8vw,4.25rem);line-height:1.08;color:var(--paper-000);text-wrap:balance">El riesgo central no parece ser quedarte sin voz. <em style="font-weight:300;color:var(--paper-100)">Puede ser <span style="text-decoration:underline;text-decoration-color:var(--astro-scorpio);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">conceder demasiado poder a la respuesta</span> una vez que decides usarla.</em></h2>
+<div style="display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:0 1.5rem;margin-top:var(--space-lg)">
+<p data-reveal="0" style="grid-column:{{ colText }};margin:0;font-size:var(--t-body);line-height:1.75;color:var(--paper-100);max-width:var(--measure)">Cuando una idea está unida a la identidad, la opinión sobre el trabajo puede sentirse como opinión sobre la persona. Una sugerencia técnica adquiere peso emocional. Una duda ajena puede instalarse como duda propia. El problema no está en escuchar. Está en <span style="text-decoration:underline;text-decoration-color:var(--astro-gemini);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">escuchar sin saber qué pregunta querías responder</span>.</p>
+</div>
+
+<div style="margin-top:var(--space-xl)">
+<p data-reveal="0" style="margin:0;font-size:var(--t-body);line-height:1.6;color:var(--ink-300)">El mapa propone una forma distinta de intercambio:</p>
+<p data-reveal="150" style="margin:.5rem 0 0;font-family:var(--font-serif-display);font-style:italic;font-weight:300;font-size:var(--t-display);line-height:.95;letter-spacing:-.02em;color:var(--green-500)">presencia graduada.</p>
+<p data-reveal="0" style="margin:var(--space-lg) 0 1.5rem;font-size:var(--t-body);line-height:1.6;color:var(--paper-100)">Antes de compartir algo, pueden existir tres decisiones separadas:</p>
+<ol style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column">
+<li data-reveal="0" style="display:grid;grid-template-columns:clamp(8.5rem,14vw,12rem) minmax(0,1fr);gap:1rem;align-items:baseline;padding:clamp(1.25rem,3vw,2.25rem) 0;border-top:1px solid var(--line-dark)">
+<span style="font-family:var(--font-serif-display);font-weight:300;font-size:clamp(28px,3vw,3rem);color:var(--ink-300);font-variant-numeric:tabular-nums">01</span>
+<span style="max-width:28ch;font-family:var(--font-serif-display);font-size:clamp(28px,2.6vw,2.75rem);line-height:1.15;color:var(--paper-000)">Qué parte está suficientemente formada para recibir contacto.</span>
+</li>
+<li data-reveal="200" style="display:grid;grid-template-columns:clamp(8.5rem,14vw,12rem) minmax(0,1fr);gap:1rem;align-items:baseline;padding:clamp(1.25rem,3vw,2.25rem) 0;border-top:1px solid var(--line-dark);margin-left:clamp(0rem,7vw,9rem)">
+<span style="font-family:var(--font-serif-display);font-weight:300;font-size:clamp(28px,3vw,3rem);color:var(--ink-300);font-variant-numeric:tabular-nums">02</span>
+<span style="max-width:28ch;font-family:var(--font-serif-display);font-size:clamp(28px,2.6vw,2.75rem);line-height:1.15;color:var(--paper-000)">Qué quieres aprender de la respuesta.</span>
+</li>
+<li data-reveal="400" style="display:grid;grid-template-columns:clamp(8.5rem,14vw,12rem) minmax(0,1fr);gap:1rem;align-items:baseline;padding:clamp(1.25rem,3vw,2.25rem) 0;border-top:1px solid var(--line-dark);border-bottom:1px solid var(--line-dark);margin-left:clamp(0rem,14vw,18rem)">
+<span style="font-family:var(--font-serif-display);font-weight:300;font-size:clamp(28px,3vw,3rem);color:var(--ink-300);font-variant-numeric:tabular-nums">03</span>
+<span style="max-width:28ch;font-family:var(--font-serif-display);font-size:clamp(28px,2.6vw,2.75rem);line-height:1.15;color:var(--paper-000)">Quién puede responder desde una posición útil para esa etapa.</span>
+</li>
+</ol>
+<p data-reveal="0" style="margin:2rem 0 0;margin-left:clamp(0rem,14vw,18rem);font-size:var(--t-body);line-height:1.6;color:var(--paper-100)">Estas decisiones <span style="text-decoration:underline;text-decoration-color:var(--astro-cancer);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">protegen el centro sin cerrar la conversación</span>.</p>
+</div>
+
+<div style="margin-top:var(--space-xl)">
+<p data-reveal="0" style="margin:0 0 2rem;font-size:var(--t-body);line-height:1.6;color:var(--ink-300)">En la vida cotidiana, la diferencia puede ser pequeña. No es lo mismo preguntar…</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));gap:2.5rem clamp(2rem,6vw,8rem)">
+<div data-reveal="0" style="padding-top:1.5rem;border-top:1px solid var(--line-dark)">
+<p style="margin:0;font-family:var(--font-serif-display);font-size:clamp(2rem,4vw,4rem);line-height:1.05;color:var(--ink-300)">“¿Qué piensas?”</p>
+<p style="margin: 1rem 0 0; font-size:28px; line-height: 1.6; color: var(--paper-100); max-width: 36ch">La primera pregunta entrega toda la obra a la impresión general.</p>
+</div>
+<div data-reveal="250" style="padding-top:1.5rem;border-top:1px solid var(--green-500)">
+<p style="margin:0;font-family:var(--font-serif-display);font-size:clamp(2rem,4vw,4rem);line-height:1.05;color:var(--paper-000)"><span style="font-family:var(--font-sans-body);font-size:28px;color:var(--ink-300);display:block;margin-bottom:.5rem">…que preguntar</span>“¿En qué parte perdiste el hilo?”</p>
+<p style="margin:1rem 0 0;font-size:28px;line-height:1.6;color:var(--paper-100);max-width:36ch">La segunda abre un punto concreto a la experiencia de otra persona.</p>
+</div>
+</div>
+<p data-reveal="0" style="margin:var(--space-lg) 0 0;font-family:var(--font-serif-display);font-size:var(--t-sub);line-height:1.25;color:var(--paper-000);max-width:30ch">No toda mirada necesita el mismo acceso. <span style="color:var(--ink-300)"><span style="text-decoration:underline;text-decoration-color:var(--astro-virgo);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">No toda opinión merece el mismo voto.</span></span></p>
+</div>
+
+<div style="margin-top:var(--space-xl);display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:2rem 1.5rem">
+<div data-reveal="0" style="grid-column:{{ colLedger }}">
+<dc-import name="AstrologyEvidence" rows="{{ ev0 }}" caption="Revolución Solar sobre carta natal" mobile="{{ ledgerMobile }}" desktop="{{ ledgerDesktop }}" cols="{{ ledgerCols }}" rel-span="{{ relSpan }}" hint-size="100%,260px"></dc-import>
+</div>
+<div data-reveal="150" style="grid-column:{{ colLedgerText }};display:flex;flex-direction:column;gap:1.1rem;font-size:var(--t-body);line-height:1.7;color:var(--paper-100);max-width:var(--measure)">
+<p style="margin:0">El Ascendente de la Revolución está en Leo y cae sobre tu casa natal 8. Su regente, el Sol, está en Libra, en la casa 3 del ciclo y sobre tu casa natal 11. La Luna se encuentra en Géminis y casa 11, sobre tu casa natal 6, en trígono con el Sol.</p>
+<p style="margin:0">La configuración reúne identidad, palabra, intimidad, grupos y vida cotidiana. La casa natal 8 no demuestra trauma ni acontecimientos ocultos. Indica que la visibilidad anual toca <span style="text-decoration:underline;text-decoration-color:var(--astro-scorpio);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">un territorio que puede sentirse vulnerable o profundamente personal</span>.</p>
+<p style="margin:0">El Sol en casa 3 necesita formular. La casa natal 11 lleva esa formulación hacia proyectos, redes o interlocutores. La Luna en casa 11 favorece circulación e intercambio, pero su caída sobre la casa natal 6 recuerda que toda conversación también entra en el ritmo diario: <span style="text-decoration:underline;text-decoration-color:var(--astro-virgo);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">puede alimentar el trabajo o multiplicar el ruido</span>.</p>
+</div>
+</div>
+</section>
+
+<section aria-label="Para qué los necesitas" data-chapter="2" style="min-height:90svh;display:flex;align-items:center;max-width:1480px;margin:0 auto;padding:var(--space-xl) var(--gutter);box-sizing:border-box">
+<p style="margin:0;margin-left:auto;max-width:20ch;font-family:var(--font-serif-display);font-weight:400;font-size:var(--t-h);line-height:1.06;color:var(--paper-000);text-wrap:balance"><span data-reveal="0" style="display:block;color:var(--ink-300)">La pregunta no es si necesitas a los demás.</span><span data-reveal="400" style="display:block;margin-top:.3em">Es <em><span style="text-decoration:underline;text-decoration-color:var(--astro-libra);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">para qué los necesitas en cada momento de la obra</span>.</em></span></p>
+</section>
+
+<!-- 03 TRES FUERZAS -->
+<section id="cap-03" data-chapter="3" data-screen-label="03 Tres fuerzas" aria-labelledby="t03" style="position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;max-width:1480px;margin:0 auto;padding:var(--space-xl) var(--gutter);box-sizing:border-box;border-top:1px solid var(--line-dark)">
+<p data-reveal="0" style="margin:0 0 2rem;font-size:28px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-300)"><span style="font-variant-numeric:tabular-nums;color:var(--red-100)">03</span> — Tres fuerzas</p>
+<h2 id="t03" data-reveal="100" style="margin:0;max-width:12ch;font-family:var(--font-serif-display);font-weight:400;font-size:var(--t-display);line-height:.96;letter-spacing:-.02em;color:var(--paper-000)">Tres fuerzas que modifican <em style="font-weight:300">el proceso</em></h2>
+<div data-reveal="300" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,14rem),1fr));gap:1.5rem;margin-top:var(--space-lg);max-width:60rem">
+<a href="#fuerza-1" style="display:flex;gap:12px;align-items:baseline;padding-top:12px;border-top:1px solid var(--line-dark);font-size:28px;color:var(--paper-100)" style-hover="color:var(--paper-000);border-color:var(--paper-000)"><span style="font-size:28px;letter-spacing:.14em;color:var(--ink-300)">01</span>Intensidad y escala</a>
+<a href="#fuerza-2" style="display:flex;gap:12px;align-items:baseline;padding-top:12px;border-top:1px solid var(--line-dark);font-size:28px;color:var(--paper-100)" style-hover="color:var(--paper-000);border-color:var(--paper-000)"><span style="font-size:28px;letter-spacing:.14em;color:var(--ink-300)">02</span>Intuición y evidencia</a>
+<a href="#fuerza-3" style="display:flex;gap:12px;align-items:baseline;padding-top:12px;border-top:1px solid var(--line-dark);font-size:28px;color:var(--paper-100)" style-hover="color:var(--paper-000);border-color:var(--paper-000)"><span style="font-size:28px;letter-spacing:.14em;color:var(--ink-300)">03</span>Calidad y término</a>
+</div>
+</section>
+
+<article id="fuerza-1" data-chapter="3" aria-labelledby="f1t" style="max-width:1480px;margin:0 auto;padding:var(--space-xl) var(--gutter);box-sizing:border-box;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));gap:3rem clamp(2rem,6vw,8rem);border-top:1px solid var(--line-dark)">
+<div>
+<div style="position:{{ stickyPos }};top:12svh">
+<p aria-hidden="true" style="margin:0;font-family:var(--font-serif-display);font-weight:300;font-size:clamp(5rem,13vw,13rem);line-height:.85;color:var(--red-100)">01</p>
+<h3 id="f1t" style="margin:1rem 0 0;font-family:var(--font-serif-display);font-weight:400;font-size:clamp(2.2rem,4vw,4.5rem);line-height:1;color:var(--paper-000)">Intensidad <em style="font-weight:300">y escala</em></h3>
+<div aria-hidden="true" style="position:relative;margin:5rem 0 4rem;height:150px;max-width:22rem">
+<svg viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible"><line x1="4" y1="6" x2="4" y2="94" vector-effect="non-scaling-stroke" style="stroke:rgba(250,249,246,.38)"></line><line x1="4" y1="6" x2="40" y2="50" vector-effect="non-scaling-stroke" style="stroke:var(--green-500);opacity:.7"></line><line x1="4" y1="94" x2="40" y2="50" vector-effect="non-scaling-stroke" style="stroke:var(--green-500);opacity:.7"></line></svg>
+<span style="position:absolute;left:4%;top:6%;width:9px;height:9px;border-radius:50%;background:var(--red-100);transform:translate(-50%,-50%)"></span>
+<span style="position:absolute;left:4%;top:94%;width:9px;height:9px;border-radius:50%;background:var(--blue-100);transform:translate(-50%,-50%)"></span>
+<span style="position:absolute;left:40%;top:50%;width:10px;height:10px;border-radius:50%;background:var(--green-500);outline:1px solid var(--green-500);outline-offset:6px;transform:translate(-50%,-50%)"></span>
+<span style="position:absolute;left:0;bottom:calc(94% + 14px);line-height:1.1;font-size:28px;letter-spacing:.12em;text-transform:uppercase;color:var(--paper-100)">Intensidad</span>
+<span style="position:absolute;left:0;top:calc(94% + 14px);line-height:1.1;font-size:28px;letter-spacing:.12em;text-transform:uppercase;color:var(--paper-100)">Escala</span>
+<span style="position:absolute;left:calc(40% + 22px);top:50%;transform:translateY(-50%);max-width:calc(60% - 22px);line-height:1.1;font-size:28px;letter-spacing:.12em;text-transform:uppercase;color:var(--green-500);">Escala consciente</span>
+</div>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:var(--space-lg);min-width:0">
+<p data-reveal="0" style="margin:0;font-family:var(--font-serif-display);font-size:clamp(28px,2.6vw,2.75rem);line-height:1.18;color:var(--paper-000);text-wrap:pretty">Tu desafío puede no ser la falta de energía. <em style="color:var(--paper-100)">Puede ser decidir <span style="text-decoration:underline;text-decoration-color:var(--astro-virgo);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">qué tamaño de problema merece toda esa energía</span>.</em></p>
+<p data-reveal="0" style="margin:0;font-size:var(--t-body);line-height:1.75;color:var(--paper-100);max-width:var(--measure)">Cuando la escala no está definida, cada detalle puede parecer estructural. Corregir una parte exige revisar el conjunto. Una diferencia de criterio amenaza la dirección completa. <span style="text-decoration:underline;text-decoration-color:var(--astro-scorpio);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">El trabajo gana profundidad y pierde movimiento.</span></p>
+<div data-reveal="0" style="display:flex;flex-direction:column;gap:1rem">
+<dc-import name="AstrologyEvidence" rows="{{ ev1 }}" caption="La presión: hábitos, valor, acción privada, proyectos compartidos" mobile="{{ true }}" desktop="{{ false }}" cols="1fr 1fr 1fr" rel-span="1 / -1" hint-size="100%,200px"></dc-import>
+<p style="margin: 0; font-size: 28px; line-height: 1.7; color: var(--ink-300); max-width: var(--measure)">Plutón de la Revolución está en casa 6, sobre tu casa natal 2, en oposición al Ascendente y cuadratura al Medio Cielo. Marte está en Escorpio y casa 4, sobre tu casa natal 11, conjunto a Plutón natal. La presión toca hábitos, valor, acción privada y proyectos compartidos.</p>
+<p style="margin:0;font-size:var(--t-body);line-height:1.7;color:var(--paper-000);max-width:var(--measure)">La configuración no anuncia una crisis. <span style="text-decoration:underline;text-decoration-color:var(--astro-scorpio);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">Describe potencia.</span> Su expresión cambia cuando el campo se delimita.</p>
+</div>
+<aside data-reveal="0" aria-label="Tercera fuerza posible" style="display:grid;grid-template-columns:44px minmax(0,1fr);gap:1.25rem;padding-top:1.75rem;border-top:1px solid var(--green-500)">
+<svg width="44" height="56" viewBox="0 0 44 56" aria-hidden="true"><line x1="5" y1="5" x2="5" y2="51" style="stroke:rgba(250,249,246,.4)"></line><line x1="5" y1="5" x2="36" y2="28" style="stroke:var(--green-500)"></line><line x1="5" y1="51" x2="36" y2="28" style="stroke:var(--green-500)"></line><circle cx="5" cy="5" r="3" style="fill:var(--red-100)"></circle><circle cx="5" cy="51" r="3" style="fill:var(--blue-100)"></circle><circle cx="36" cy="28" r="4" style="fill:var(--green-500)"></circle><circle cx="36" cy="28" r="8" style="fill:none;stroke:var(--green-500);opacity:.6"></circle></svg>
+<div>
+<p style="margin:0;font-size:28px;letter-spacing:.16em;text-transform:uppercase;color:var(--green-500)">Tercera fuerza posible</p>
+<p style="margin:.6rem 0 0;font-family:var(--font-serif-display);font-style:italic;font-size:clamp(28px,2.4vw,2.4rem);line-height:1.1;color:var(--paper-000)">Escala consciente</p>
+<p style="margin:.9rem 0 0;font-size:var(--t-body);line-height:1.7;color:var(--paper-000);max-width:var(--measure)"><span style="text-decoration:underline;text-decoration-color:var(--astro-virgo);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">Determinar la unidad de trabajo antes de empezar.</span> Una página. Una decisión. Una conversación. La intensidad puede entonces profundizar sin absorber el proyecto entero.</p>
+</div>
+</aside>
+</div>
+</article>
+
+<article id="fuerza-2" data-chapter="3" aria-labelledby="f2t" style="max-width:1480px;margin:0 auto;padding:var(--space-xl) var(--gutter);box-sizing:border-box;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));gap:3rem clamp(2rem,6vw,8rem);border-top:1px solid var(--line-dark)">
+<div>
+<div style="position:{{ stickyPos }};top:12svh">
+<p aria-hidden="true" style="margin:0;font-family:var(--font-serif-display);font-weight:300;font-size:clamp(5rem,13vw,13rem);line-height:.85;color:var(--blue-100)">02</p>
+<h3 id="f2t" style="margin:1rem 0 0;font-family:var(--font-serif-display);font-weight:400;font-size:clamp(2.2rem,4vw,4.5rem);line-height:1;color:var(--paper-000)">Intuición <em style="font-weight:300">y evidencia</em></h3>
+<div aria-hidden="true" style="position:relative;margin:5rem 0 4rem;height:150px;max-width:22rem">
+<svg viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible"><line x1="4" y1="6" x2="4" y2="94" vector-effect="non-scaling-stroke" style="stroke:rgba(250,249,246,.38)"></line><line x1="4" y1="6" x2="40" y2="50" vector-effect="non-scaling-stroke" style="stroke:var(--green-500);opacity:.7"></line><line x1="4" y1="94" x2="40" y2="50" vector-effect="non-scaling-stroke" style="stroke:var(--green-500);opacity:.7"></line></svg>
+<span style="position:absolute;left:4%;top:6%;width:9px;height:9px;border-radius:50%;background:var(--red-100);transform:translate(-50%,-50%)"></span>
+<span style="position:absolute;left:4%;top:94%;width:9px;height:9px;border-radius:50%;background:var(--blue-100);transform:translate(-50%,-50%)"></span>
+<span style="position:absolute;left:40%;top:50%;width:10px;height:10px;border-radius:50%;background:var(--green-500);outline:1px solid var(--green-500);outline-offset:6px;transform:translate(-50%,-50%)"></span>
+<span style="position:absolute;left:0;bottom:calc(94% + 14px);line-height:1.1;font-size:28px;letter-spacing:.12em;text-transform:uppercase;color:var(--paper-100)">Intuición</span>
+<span style="position:absolute;left:0;top:calc(94% + 14px);line-height:1.1;font-size:28px;letter-spacing:.12em;text-transform:uppercase;color:var(--paper-100)">Evidencia</span>
+<span style="position:absolute;left:calc(40% + 22px);top:50%;transform:translateY(-50%);max-width:calc(60% - 22px);line-height:1.1;font-size:28px;letter-spacing:.12em;text-transform:uppercase;color:var(--green-500);">Estado real</span>
+</div>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:var(--space-lg);min-width:0">
+<p data-reveal="0" style="margin:0;font-family:var(--font-serif-display);font-size:clamp(28px,2.6vw,2.75rem);line-height:1.18;color:var(--paper-000);text-wrap:pretty">Una mente abierta puede reconocer relaciones que antes no existían en el mapa. <em style="color:var(--paper-100)">También puede <span style="text-decoration:underline;text-decoration-color:var(--astro-gemini);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">convertir cada relación nueva en otro proyecto de investigación</span>.</em></p>
+<div data-reveal="0" style="display:flex;flex-direction:column;gap:1rem">
+<dc-import name="AstrologyEvidence" rows="{{ ev2 }}" caption="Un solo campo convergente" mobile="{{ true }}" desktop="{{ false }}" cols="1fr 1fr 1fr" rel-span="1 / -1" hint-size="100%,200px"></dc-import>
+<p style="margin:0;font-size:28px;line-height:1.7;color:var(--ink-300);max-width:var(--measure)">Mercurio del ciclo está en Escorpio y casa 4, sobre tu casa natal 11, en cuadratura al Ascendente. Urano, Neptuno y Plutón forman contactos estrechos con tu Mercurio natal en casa 10. Se trata de un solo campo convergente.</p>
+</div>
+<div data-reveal="0" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,11rem),1fr));gap:1rem 1.5rem">
+<p style="margin:0;padding-top:12px;border-top:1px solid var(--line-dark);font-size:28px;line-height:1.5;color:var(--paper-100)"><span style="display:block;font-family:var(--font-serif-display);font-size:34px;color:var(--paper-000)">Urano</span>abre.</p>
+<p style="margin:0;padding-top:12px;border-top:1px solid var(--line-dark);font-size:28px;line-height:1.5;color:var(--paper-100)"><span style="display:block;font-family:var(--font-serif-display);font-size:34px;color:var(--paper-000)">Neptuno</span>vuelve poroso el límite entre percepción e imaginación.</p>
+<p style="margin:0;padding-top:12px;border-top:1px solid var(--line-dark);font-size:28px;line-height:1.5;color:var(--paper-100)"><span style="display:block;font-family:var(--font-serif-display);font-size:34px;color:var(--paper-000)">Plutón</span>insiste en encontrar lo que opera debajo.</p>
+</div>
+<p data-reveal="0" style="margin:0;font-size:var(--t-body);line-height:1.75;color:var(--paper-100);max-width:var(--measure)">Juntos pueden enriquecer una idea y dificultar el momento de cerrarla. <span style="color:var(--paper-000)"><span style="text-decoration:underline;text-decoration-color:var(--astro-sagittarius);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">No toda intuición necesita convertirse de inmediato en teoría.</span></span></p>
+<aside data-reveal="0" aria-label="Tercera fuerza posible" style="display:grid;grid-template-columns:44px minmax(0,1fr);gap:1.25rem;padding-top:1.75rem;border-top:1px solid var(--green-500)">
+<svg width="44" height="56" viewBox="0 0 44 56" aria-hidden="true"><line x1="5" y1="5" x2="5" y2="51" style="stroke:rgba(250,249,246,.4)"></line><line x1="5" y1="5" x2="36" y2="28" style="stroke:var(--green-500)"></line><line x1="5" y1="51" x2="36" y2="28" style="stroke:var(--green-500)"></line><circle cx="5" cy="5" r="3" style="fill:var(--red-100)"></circle><circle cx="5" cy="51" r="3" style="fill:var(--blue-100)"></circle><circle cx="36" cy="28" r="4" style="fill:var(--green-500)"></circle><circle cx="36" cy="28" r="8" style="fill:none;stroke:var(--green-500);opacity:.6"></circle></svg>
+<div>
+<p style="margin:0;font-size:28px;letter-spacing:.16em;text-transform:uppercase;color:var(--green-500)">Tercera fuerza posible</p>
+<p style="margin:.6rem 0 0;font-family:var(--font-serif-display);font-style:italic;font-size:clamp(28px,2.4vw,2.4rem);line-height:1.1;color:var(--paper-000)">Cada percepción en su estado real</p>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:1rem">
+<span style="padding:4px 12px;border:1px solid rgba(250,249,246,.3);border-radius:999px;font-size:28px;color:var(--paper-000)">dato</span>
+<span style="padding:4px 12px;border:1px solid rgba(250,249,246,.3);border-radius:999px;font-size:28px;color:var(--paper-000)">interpretación</span>
+<span style="padding:4px 12px;border:1px solid rgba(250,249,246,.3);border-radius:999px;font-size:28px;color:var(--paper-000)">deseo</span>
+<span style="padding:4px 12px;border:1px solid rgba(250,249,246,.3);border-radius:999px;font-size:28px;color:var(--paper-000)">pregunta</span>
+</div>
+<p style="margin:1rem 0 0;font-size:var(--t-body);line-height:1.7;color:var(--paper-000);max-width:var(--measure)">Una tercera fuerza posible es conservar cada percepción en su estado real: <span style="text-decoration:underline;text-decoration-color:var(--astro-gemini);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">dato, interpretación, deseo o pregunta</span>. Esa precisión no reduce el misterio. Evita pedirle a una idea más certeza de la que todavía posee.</p>
+</div>
+</aside>
+</div>
+</article>
+
+<article id="fuerza-3" data-chapter="3" aria-labelledby="f3t" style="max-width:1480px;margin:0 auto;padding:var(--space-xl) var(--gutter);box-sizing:border-box;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));gap:3rem clamp(2rem,6vw,8rem);border-top:1px solid var(--line-dark)">
+<div>
+<div style="position:{{ stickyPos }};top:12svh">
+<p aria-hidden="true" style="margin:0;font-family:var(--font-serif-display);font-weight:300;font-size:clamp(5rem,13vw,13rem);line-height:.85;color:var(--gold-100)">03</p>
+<h3 id="f3t" style="margin:1rem 0 0;font-family:var(--font-serif-display);font-weight:400;font-size:clamp(2.2rem,4vw,4.5rem);line-height:1;color:var(--paper-000)">Calidad <em style="font-weight:300">y término</em></h3>
+<div aria-hidden="true" style="position:relative;margin:5rem 0 4rem;height:150px;max-width:22rem">
+<svg viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible"><line x1="4" y1="6" x2="4" y2="94" vector-effect="non-scaling-stroke" style="stroke:rgba(250,249,246,.38)"></line><line x1="4" y1="6" x2="40" y2="50" vector-effect="non-scaling-stroke" style="stroke:var(--green-500);opacity:.7"></line><line x1="4" y1="94" x2="40" y2="50" vector-effect="non-scaling-stroke" style="stroke:var(--green-500);opacity:.7"></line></svg>
+<span style="position:absolute;left:4%;top:6%;width:9px;height:9px;border-radius:50%;background:var(--red-100);transform:translate(-50%,-50%)"></span>
+<span style="position:absolute;left:4%;top:94%;width:9px;height:9px;border-radius:50%;background:var(--blue-100);transform:translate(-50%,-50%)"></span>
+<span style="position:absolute;left:40%;top:50%;width:10px;height:10px;border-radius:50%;background:var(--green-500);outline:1px solid var(--green-500);outline-offset:6px;transform:translate(-50%,-50%)"></span>
+<span style="position:absolute;left:0;bottom:calc(94% + 14px);line-height:1.1;font-size:28px;letter-spacing:.12em;text-transform:uppercase;color:var(--paper-100)">Calidad</span>
+<span style="position:absolute;left:0;top:calc(94% + 14px);line-height:1.1;font-size:28px;letter-spacing:.12em;text-transform:uppercase;color:var(--paper-100)">Término</span>
+<span style="position:absolute;left:calc(40% + 22px);top:50%;transform:translateY(-50%);max-width:calc(60% - 22px);line-height:1.1;font-size:28px;letter-spacing:.12em;text-transform:uppercase;color:var(--green-500);">Estándar previo</span>
+</div>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:var(--space-lg);min-width:0">
+<p data-reveal="0" style="margin:0;font-family:var(--font-serif-display);font-size:clamp(28px,2.6vw,2.75rem);line-height:1.18;color:var(--paper-000);text-wrap:pretty">La calidad necesita un criterio. <em style="color:var(--paper-100)">Para terminar, <span style="text-decoration:underline;text-decoration-color:var(--astro-capricorn);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">el criterio necesita una condición de cierre</span>.</em></p>
+<p data-reveal="0" style="margin:0;font-size:var(--t-body);line-height:1.75;color:var(--paper-100);max-width:var(--measure)">Si esa condición aparece después de cada revisión, la meta se mueve. El trabajo mejora. <span style="text-decoration:underline;text-decoration-color:var(--astro-capricorn);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">La conclusión se aleja.</span></p>
+<div data-reveal="0" style="display:flex;flex-direction:column;gap:1rem">
+<dc-import name="AstrologyEvidence" rows="{{ ev3 }}" caption="Ambas posiciones cerca de cúspides" mobile="{{ true }}" desktop="{{ false }}" cols="1fr 1fr 1fr" rel-span="1 / -1" hint-size="100%,200px"></dc-import>
+<p style="margin:0;font-size:28px;line-height:1.7;color:var(--ink-300);max-width:var(--measure)">Venus en Virgo y casa 2 se opone casi exactamente a Saturno en Piscis y casa 9. Sobre tu carta natal, la oposición enlaza el territorio profesional con la base privada que debe sostenerlo. Ambas posiciones están cerca de cúspides, así que su manifestación concreta permanece abierta.</p>
+</div>
+<aside data-reveal="0" aria-label="Tercera fuerza posible" style="display:grid;grid-template-columns:44px minmax(0,1fr);gap:1.25rem;padding-top:1.75rem;border-top:1px solid var(--green-500)">
+<svg width="44" height="56" viewBox="0 0 44 56" aria-hidden="true"><line x1="5" y1="5" x2="5" y2="51" style="stroke:rgba(250,249,246,.4)"></line><line x1="5" y1="5" x2="36" y2="28" style="stroke:var(--green-500)"></line><line x1="5" y1="51" x2="36" y2="28" style="stroke:var(--green-500)"></line><circle cx="5" cy="5" r="3" style="fill:var(--red-100)"></circle><circle cx="5" cy="51" r="3" style="fill:var(--blue-100)"></circle><circle cx="36" cy="28" r="4" style="fill:var(--green-500)"></circle><circle cx="36" cy="28" r="8" style="fill:none;stroke:var(--green-500);opacity:.6"></circle></svg>
+<div>
+<p style="margin:0;font-size:28px;letter-spacing:.16em;text-transform:uppercase;color:var(--green-500)">Tercera fuerza posible</p>
+<p style="margin:.6rem 0 0;font-family:var(--font-serif-display);font-style:italic;font-size:clamp(28px,2.4vw,2.4rem);line-height:1.1;color:var(--paper-000)">Definir el estándar antes de juzgar la versión</p>
+<p style="margin:.9rem 0 0;font-size:var(--t-body);line-height:1.7;color:var(--paper-000);max-width:var(--measure)">La tercera fuerza no es bajar el estándar. Es <span style="text-decoration:underline;text-decoration-color:var(--astro-capricorn);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">definirlo antes de juzgar la versión</span>: qué debe lograr, qué puede quedar fuera y qué aprenderás únicamente después de compartirla.</p>
+</div>
+</aside>
+<p data-reveal="0" style="margin:var(--space-md) 0 0;font-family:var(--font-serif-display);font-size:var(--t-sub);line-height:1.2;color:var(--paper-000);max-width:22ch">Un estándar sin condición de término no mide la obra. <span style="display:block;margin-top:.3em;color:var(--ink-300)"><span style="text-decoration:underline;text-decoration-color:var(--astro-neutral);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">Mantiene abierta la evaluación.</span></span></p>
+</div>
+</article>
+
+<!-- 04 EL CIRCUITO -->
+<section id="cap-04" data-chapter="4" data-screen-label="04 El circuito" aria-labelledby="t04" style="border-top:1px solid var(--line-dark)">
+<div style="max-width:1480px;margin:0 auto;padding:var(--space-xl) var(--gutter) var(--space-lg);box-sizing:border-box">
+<p data-reveal="0" style="margin:0 0 2rem;font-size:28px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-300)"><span style="font-variant-numeric:tabular-nums;color:var(--gold-100)">04</span> — El circuito</p>
+<h2 id="t04" data-reveal="100" style="margin:0;font-family:var(--font-serif-display);font-weight:400;font-size:var(--t-display);line-height:.95;letter-spacing:-.02em;color:var(--paper-000)">El circuito</h2>
+</div>
+
+<div style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap">
+<p>Circuito: la obra se vuelve personal, la respuesta se vuelve juicio, aumenta el control, crecen las variables, se mueve el estándar, se aplaza el contacto.</p>
+<p>Otro movimiento: pregunta precisa, exposición delimitada, respuesta útil, ajuste concreto, nueva versión.</p>
+</div>
+
+<div ref="{{ circuitRef }}" style="position:relative;height:{{ circuitHeight }}">
+<div style="position: {{ stagePos }}; top: 0; height: {{ stageH }}; box-sizing: border-box; max-width: 1840px; margin: 0 auto; padding: {{ stagePad }}; display: flex; flex-direction: {{ stageDir }}; align-items: center; justify-content: {{ stageJustify }}; gap: {{ stageGap }}; width: 100%">
+<div aria-hidden="true" style="position:relative;flex:none;width:{{ dSize }};height:{{ dSize }};margin-inline:{{ dMargin }}">
+<svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible">
+<circle cx="50" cy="50" r="{{ ringR }}" style="fill:none;stroke:rgba(250,249,246,.12);stroke-width:.25"></circle>
+<sc-for list="{{ ringSegs }}" as="sg" hint-placeholder-count="6"><circle cx="50" cy="50" r="{{ ringR }}" transform="{{ sg.rot }}" style="fill:none;stroke:{{ sg.c }};stroke-width:.7;stroke-dasharray:{{ sg.dash }};stroke-dashoffset:{{ sg.off }};opacity:{{ ringOpacity }};transition:stroke-dashoffset 700ms var(--ease-out),opacity 900ms var(--ease-out)"></circle></sc-for>
+<path d="{{ spiralD }}" style="fill:none;stroke:var(--green-500);stroke-width:.4;stroke-linecap:round;stroke-dasharray:{{ spiralLen }};stroke-dashoffset:{{ spiralOffset }};transition:stroke-dashoffset 1200ms var(--ease-out) 200ms"></path>
+</svg>
+<sc-for list="{{ nodes }}" as="nd" hint-placeholder-count="6">
+<div style="position:absolute;left:{{ nd.x }};top:{{ nd.y }};width:0;height:0;opacity:{{ nd.op }};transition:left 1000ms var(--ease-out),top 1000ms var(--ease-out),opacity 600ms var(--ease-out)">
+<span style="position:absolute;left:0;top:0;width:{{ nd.size }};height:{{ nd.size }};border-radius:50%;box-sizing:border-box;border:1px solid {{ nd.stroke }};background:{{ nd.fill }};outline:1px solid {{ nd.halo }};outline-offset:7px;transform:translate(-50%,-50%);transition:all 400ms var(--ease-out)"></span>
+<span style="position:absolute;left:{{ nd.lx }};top:0;width:max-content;white-space:nowrap;transform:{{ nd.lt }};text-align:{{ nd.ta }};transition:all 900ms var(--ease-out)">
+<span style="display:block;font-size:22px;letter-spacing:.14em;font-variant-numeric:tabular-nums;color:{{ nd.numColor }};transition:color 400ms">{{ nd.num }}</span>
+<span style="display:{{ nd.labelDisplay }};margin-top:2px">
+<span style="display:block;grid-area:1 / 1;font-size:22px;line-height:1.25;color:{{ nd.color }};opacity:{{ nd.loopOp }};transition:opacity 500ms,color 400ms">{{ nd.loopLabel }}</span>
+<span style="display:block;grid-area:1 / 1;font-size:22px;line-height:1.25;color:var(--green-500);opacity:{{ nd.nextOp }};transition:opacity 700ms 300ms">{{ nd.nextLabel }}</span>
+</span>
+</span>
+</div>
+</sc-for>
+</div>
+
+<div aria-live="polite" style="position:relative;display:flex;flex-direction:column;gap:12px;width:{{ narrW }};flex:{{ narrFlex }}">
+<p style="order:{{ progOrder }};margin:0;display:{{ dotsDisplay }};gap:4px;align-items:center" aria-hidden="true">
+<sc-for list="{{ stepDots }}" as="d" hint-placeholder-count="11">
+<span style="display:block;width:{{ d.w }};height:2px;background:{{ d.c }};transition:all 400ms var(--ease-out)"></span>
+</sc-for>
+</p>
+<div style="display:grid;gap:{{ narrGap }}">
+<sc-for list="{{ narr }}" as="n" hint-placeholder-count="1">
+<div aria-hidden="{{ n.hidden }}" style="grid-area:{{ n.area }};align-self:{{ n.align }};opacity:{{ n.op }};transform:translateY({{ n.ty }});transition:opacity 500ms var(--ease-out),transform 700ms var(--ease-out);pointer-events:none">
+<p style="margin:0 0 {{ narrKMargin }};font-size:28px;letter-spacing:.16em;text-transform:uppercase;color:{{ n.kColor }}">{{ n.k }}</p>
+<p style="margin:0;font-family:var(--font-serif-display);font-size:{{ narrTitle }};line-height:1.12;color:var(--paper-000);text-wrap:balance">{{ n.t }}</p>
+<p style="margin:{{ narrKMargin }} 0 0;font-size:{{ narrBody }};line-height:1.55;color:var(--paper-100);text-wrap:pretty">{{ n.b }}</p>
+<ol style="list-style:none;margin:{{ narrKMargin }} 0 0;padding:0;display:flex;flex-direction:column;gap:.45rem">
+<sc-for list="{{ n.items }}" as="li" hint-placeholder-count="0">
+<li style="display:grid;grid-template-columns:18px minmax(0,1fr);gap:10px;font-size:{{ narrItem }};line-height:1.42;color:var(--paper-100)"><span style="margin-top:.4em;width:8px;height:8px;border-radius:50%;border:1px solid var(--green-500);box-sizing:border-box"></span><span>{{ li }}</span></li>
+</sc-for>
+</ol>
+</div>
+</sc-for>
+</div>
+</div>
+</div>
+</div>
+
+<div style="max-width:1480px;margin:0 auto;padding:var(--space-xl) var(--gutter) 0;box-sizing:border-box;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,24rem),1fr));gap:2.5rem clamp(2rem,6vw,8rem)">
+<div data-reveal="0" style="display:flex;flex-direction:column;gap:1.25rem;font-size:var(--t-body);line-height:1.75;color:var(--paper-100);max-width:var(--measure)">
+<h3 style="margin:0 0 .5rem;font-family:var(--font-serif-display);font-weight:400;font-size:var(--t-h);line-height:1.02;letter-spacing:-.01em;color:var(--paper-000)">Por ejemplo</h3>
+<p style="margin:0">Quieres saber si una propuesta se entiende. En vez de enviar el proyecto entero y preguntar “¿qué opinas?”, eliges la página donde debería aparecer la idea principal, se la muestras a una persona capaz de representar a su lector y preguntas: <span style="color:var(--paper-000)">“¿Qué crees que estoy proponiendo y en qué momento pierdes el hilo?”</span>. La respuesta ya no decide si la obra vale. <span style="text-decoration:underline;text-decoration-color:var(--astro-virgo);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">Te muestra si esa página cumple su función.</span></p>
+</div>
+<div data-reveal="150" style="display:flex;flex-direction:column;gap:1.5rem">
+<p style="margin:0;font-family:var(--font-serif-display);font-size:clamp(1.75rem,2.6vw,2.75rem);line-height:1.3;color:var(--paper-000)"><span style="text-decoration:underline;text-decoration-color:var(--astro-libra);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">Eso es diseñar el encuentro</span>: delimitar la pieza, elegir al interlocutor, formular la pregunta y saber qué decisión podrá cambiar con la respuesta.</p>
+<p style="margin:0;font-size:var(--t-body);line-height:1.75;color:var(--paper-100);max-width:var(--measure)"><span style="text-decoration:underline;text-decoration-color:var(--astro-virgo);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">Una prueba pequeña no es una obra pequeña.</span> Es una herramienta para obtener una clase específica de información. Puede mostrar si una explicación se entiende, si una estructura sostiene, si una conversación abre posibilidades o si el costo real coincide con el imaginado.</p>
+</div>
+</div>
+<div style="max-width:1480px;margin:0 auto;padding:var(--space-lg) var(--gutter) 0;box-sizing:border-box;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:0 1.5rem">
+<p data-reveal="0" style="grid-column:{{ colText }};margin:0;font-size:var(--t-body);line-height:1.75;color:var(--paper-100);max-width:var(--measure)">Esta relación entre las fuerzas contiene la posible tercera vía del ciclo: no esconder la obra hasta que sea invulnerable ni entregarla antes de que tenga centro. <span style="color:var(--green-500)">Construir contactos capaces de fortalecer su forma.</span></p>
+</div>
+<div style="min-height:100svh;display:flex;align-items:center;justify-content:center;padding:var(--space-xl) var(--gutter);box-sizing:border-box">
+<blockquote data-reveal="0" style="margin:0;max-width:17ch;text-align:center;font-family:var(--font-serif-display);font-weight:400;font-size:clamp(2.4rem,5.6vw,6.5rem);line-height:1.04;letter-spacing:-.015em;color:var(--paper-000);text-wrap:balance">La respuesta del mundo es más útil cuando la obra <em style="font-weight:300;color:var(--green-500)">sabe qué quiere preguntarle.</em></blockquote>
+</div>
+</section>
+
+<div ref="{{ shiftRef }}" aria-hidden="true" style="height:80svh"></div>
+
+<!-- 05 TU BRÚJULA -->
+<section id="cap-05" data-chapter="5" data-screen-label="05 Tu brújula" aria-labelledby="t05" style="max-width:1480px;margin:0 auto;padding:var(--space-lg) var(--gutter) var(--space-xl);box-sizing:border-box;color:var(--ink-900);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));gap:3rem clamp(2rem,6vw,8rem);align-items:start">
+<div style="position:{{ stickyPos }};top:14svh">
+<p style="margin:0 0 2rem;font-size:28px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-500)"><span style="font-variant-numeric:tabular-nums;color:var(--blue-500)">05</span> — Brújula</p>
+<h2 id="t05" style="margin:0;font-family:var(--font-serif-display);font-weight:400;font-size:var(--t-h);line-height:1;color:var(--ink-900)">Tu brújula</h2>
+<p style="margin:1.5rem 0 0;font-size:var(--t-body);line-height:1.7;color:var(--ink-700);max-width:34ch">La carta no ofrece una instrucción única. <span style="text-decoration:underline;text-decoration-color:var(--astro-sagittarius);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">Ofrece momentos que pueden reconocerse.</span></p>
+</div>
+<ol style="list-style:none;margin:0;padding:0;border-bottom:1px solid var(--border-strong)">
+<sc-for list="{{ compass }}" as="c" hint-placeholder-count="5">
+<li style="border-top:1px solid var(--border-strong)">
+<h3 style="margin:0;font-weight:400">
+<button type="button" onClick="{{ c.toggle }}" aria-expanded="{{ c.expanded }}" aria-controls="{{ c.pid }}" style="width:100%;display:grid;grid-template-columns:2.5rem minmax(0,1fr) 1.5rem;gap:1rem;align-items:baseline;padding:1.5rem 0;border:0;background:transparent;text-align:left;cursor:pointer;color:var(--ink-900);font:inherit" style-hover="color:var(--blue-900)">
+<span style="font-size:28px;letter-spacing:.14em;color:var(--ink-500);font-variant-numeric:tabular-nums">{{ c.n }}</span>
+<span style="font-family:var(--font-serif-display);font-size:clamp(1.75rem,2.6vw,2.75rem);line-height:1.15">{{ c.q }}</span>
+<span aria-hidden="true" style="font-size:28px;line-height:1;color:var(--ink-500);text-align:right">{{ c.sign }}</span>
+</button>
+</h3>
+<div id="{{ c.pid }}" role="region" style="display:grid;grid-template-rows:{{ c.rows }};transition:grid-template-rows 300ms var(--ease-out)">
+<div style="overflow:hidden;min-height:0">
+<p style="margin:0;padding:0 0 1.75rem 3.5rem;font-size:var(--t-body);line-height:1.7;color:var(--ink-700);max-width:58ch"><strong style="font-weight:600;color:var(--ink-900)">Observa</strong>{{ c.rest }}</p>
+</div>
+</div>
+</li>
+</sc-for>
+</ol>
+</section>
+
+<!-- 06 CERRAR EL CICLO -->
+<section id="cap-06" data-chapter="6" data-screen-label="06 Cerrar el ciclo" aria-labelledby="t06" style="max-width:1480px;margin:0 auto;padding:var(--space-xl) var(--gutter);box-sizing:border-box;color:var(--ink-900)">
+<p data-reveal="0" style="margin:0 0 2rem;font-size:28px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-500)"><span style="font-variant-numeric:tabular-nums;color:var(--green-900)">06</span> — Cierre</p>
+<h2 id="t06" data-reveal="100" style="margin:0;font-family:var(--font-serif-display);font-weight:400;font-size:var(--t-h);line-height:1;color:var(--ink-900)">Cómo cerrar este ciclo</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));gap:1.5rem clamp(2rem,6vw,8rem);margin-top:var(--space-lg)">
+<p data-reveal="0" style="margin:0;font-family:var(--font-serif-display);font-size:clamp(1.75rem,2.6vw,2.75rem);line-height:1.3;color:var(--ink-900)">El cierre ideal no consiste en emitir un veredicto sobre el año. Consiste en <span style="text-decoration:underline;text-decoration-color:var(--astro-aquarius);text-decoration-thickness:.09em;text-underline-offset:.18em;text-decoration-skip-ink:none">reconocer qué mecanismo ya puedes ver</span> y convertirlo en <span style="text-decoration:underline;text-decoration-color:var(--astro-virgo);text-decoration-thickness:.09em;text-underline-offset:.18em;text-decoration-skip-ink:none">una práctica para el siguiente ciclo.</span></p>
+<p data-reveal="150" style="margin:0;font-size:var(--t-body);line-height:1.75;color:var(--ink-700);max-width:var(--measure)"><span style="text-decoration:underline;text-decoration-color:var(--astro-aries);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">Elige una obra, una decisión o una conversación</span> que represente bien este proceso. <span style="text-decoration:underline;text-decoration-color:var(--astro-neutral);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">No hace falta revisar todo el año.</span> Trabaja con <span style="color:var(--ink-900);text-decoration:underline;text-decoration-color:var(--astro-virgo);text-decoration-thickness:.09em;text-underline-offset:.18em;text-decoration-skip-ink:none">un caso concreto</span> y recorre estos pasos:</p>
+</div>
+
+<ol style="list-style:none;margin:var(--space-xl) 0 0;padding:0;display:flex;flex-direction:column;gap:clamp(2.5rem,6vw,5rem);max-width:60rem;margin-left:{{ stepsIndent }}">
+<sc-for list="{{ steps }}" as="s" hint-placeholder-count="5">
+<li data-reveal="0" style="display:grid;grid-template-columns:44px minmax(0,1fr);gap:1.25rem;align-items:start">
+<button type="button" onClick="{{ s.toggle }}" aria-pressed="{{ s.pressed }}" aria-label="{{ s.aria }}" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;border:1px solid {{ s.border }};border-radius:2px;background:{{ s.bg }};color:{{ s.fg }};font-family:var(--font-sans-body);font-size:28px;letter-spacing:.06em;cursor:pointer;transition:background-color 220ms var(--ease-out),color 220ms var(--ease-out)">{{ s.mark }}</button>
+<div>
+<p style="margin:0;font-family:var(--font-serif-display);font-size:clamp(28px,2.8vw,2.9rem);line-height:1.1;color:var(--ink-900)">{{ s.t }}</p>
+<p style="margin:.8rem 0 0;font-size:var(--t-body);line-height:1.7;color:var(--ink-700);max-width:var(--measure)">{{ s.b }}</p>
+<sc-if value="{{ s.field }}" hint-placeholder-val="{{ false }}">
+<label style="display:block;margin-top:1.5rem;max-width:var(--measure)">
+<span style="display:block;font-size:28px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-500)">Antes de seguir trabajando, necesito comprobar si…</span>
+<textarea rows="2" value="{{ question }}" onChange="{{ onQuestion }}" style="display:block;width:100%;box-sizing:border-box;margin-top:.6rem;padding:.6rem 0;border:0;border-bottom:1px solid var(--ink-900);background:transparent;resize:vertical;font-family:var(--font-serif-display);font-size:clamp(28px,1.8vw,1.75rem);line-height:1.35;color:var(--ink-900);outline-offset:6px"></textarea>
+<span style="display:block;margin-top:.5rem;font-size:28px;color:var(--ink-500)">Se guarda solamente en este dispositivo.</span>
+</label>
+</sc-if>
+</div>
+</li>
+</sc-for>
+</ol>
+
+<div style="margin-top:var(--space-2xl)">
+<p data-reveal="0" style="margin:0 0 2rem;font-size:var(--t-body);line-height:1.6;color:var(--ink-700)">Para organizar el año que viene, conserva <span style="color:var(--ink-900);text-decoration:underline;text-decoration-color:var(--astro-libra);text-decoration-thickness:.09em;text-underline-offset:.18em;text-decoration-skip-ink:none">tres acuerdos visibles:</span></p>
+<ul style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,19rem),1fr));gap:clamp(1rem,2vw,1.5rem)">
+<sc-for list="{{ acuerdos }}" as="a" hint-placeholder-count="3">
+<li data-reveal="0" style="display:flex;flex-direction:column;gap:1.5rem;min-height:clamp(16rem,26vw,22rem);box-sizing:border-box;padding:clamp(1.5rem,3vw,2.5rem);border-radius:4px;background:{{ a.c }};color:var(--paper-000)">
+<span style="font-size:28px;letter-spacing:.16em;text-transform:uppercase;color:var(--paper-000)">{{ a.n }}</span>
+<span style="margin-top:auto;font-family:var(--font-serif-display);font-size:clamp(1.75rem,2.4vw,2.5rem);line-height:1.2;color:var(--paper-000);text-wrap:pretty">{{ a.t }}</span>
+</li>
+</sc-for>
+</ul>
+</div>
+
+<div style="min-height:90svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:2rem;padding:var(--space-xl) 0">
+<p data-reveal="0" style="margin:0;max-width:18ch;font-family:var(--font-serif-display);font-weight:400;font-size:var(--t-h);line-height:1.05;color:var(--ink-900);text-wrap:balance">No necesitas entrar al siguiente ciclo con <span style="text-decoration:underline;text-decoration-color:var(--astro-neutral);text-decoration-thickness:.09em;text-underline-offset:.18em;text-decoration-skip-ink:none">todas las respuestas.</span></p>
+<p data-reveal="300" style="margin:0;max-width:40ch;font-size:var(--t-body);line-height:1.7;color:var(--ink-700)">Basta con llevar <span style="color:var(--ink-900);text-decoration:underline;text-decoration-color:var(--astro-neutral);text-decoration-thickness:.09em;text-underline-offset:.18em;text-decoration-skip-ink:none">un modo más preciso</span> de relacionarte con lo que todavía no sabes.</p>
+</div>
+<div style="display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:0 1.5rem">
+<p data-reveal="0" style="grid-column:{{ colText }};margin:0;font-size:var(--t-body);line-height:1.8;color:var(--ink-700);max-width:var(--measure)">Al final, esta revolución puede no estar describiendo un resultado. Puede estar mostrando <span style="text-decoration:underline;text-decoration-color:var(--astro-scorpio);text-decoration-thickness:.09em;text-underline-offset:.2em;text-decoration-skip-ink:none">el umbral que practicaste durante el año</span>: el momento en que algo propio deja de existir solamente dentro de ti y <span style="color:var(--ink-900);text-decoration:underline;text-decoration-color:var(--astro-libra);text-decoration-thickness:.09em;text-underline-offset:.18em;text-decoration-skip-ink:none">entra en relación sin dejar de pertenecerte.</span></p>
+</div>
+</section>
+
+<section aria-label="Afirmación final" style="background:var(--paper-000);color:var(--ink-900)">
+<div style="min-height:110svh;display:flex;align-items:center;max-width:1480px;margin:0 auto;padding:var(--space-2xl) var(--gutter);box-sizing:border-box">
+<p style="margin:0;font-family:var(--font-serif-display);font-weight:400;font-size:var(--t-display);line-height:.98;letter-spacing:-.02em;color:var(--ink-900)"><span data-reveal="0" style="display:block">La tarea no es evitar <span style="text-decoration:underline;text-decoration-color:var(--astro-libra);text-decoration-thickness:.09em;text-underline-offset:.18em;text-decoration-skip-ink:none">la influencia.</span></span><em data-reveal="700" style="display:block;margin-top:.25em;font-weight:300;color:var(--green-900)">Es elegirla.</em></p>
+</div>
+<footer id="cap-07" data-chapter="7" data-screen-label="07 Contacto" ref="{{ footerRef }}" style="max-width:1480px;margin:0 auto;padding:var(--space-xl) var(--gutter) 3rem;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;gap:2rem;border-top:1px solid var(--border-subtle);text-align:center">
+<div style="width:clamp(220px,26vw,340px);aspect-ratio:1 / 1.22;overflow:hidden;position:relative">
+<img src="assets/cruz-andina-lockup.jpg" alt="Cruz Andina · Astrología Terapéutica" style="position:absolute;left:50%;top:50%;width:215%;transform:translate(-50%,-50%);mix-blend-mode:multiply">
+</div>
+<p style="margin:0;font-family:var(--font-serif-display);font-style:italic;font-size:clamp(28px,2.2vw,2.25rem);color:var(--ink-900)">Astrología como lenguaje de observación.</p>
+<div style="display:flex;flex-direction:column;align-items:center;gap:1.5rem;margin-top:1rem">
+<p style="margin:0;font-family:var(--font-serif-display);font-size:var(--t-sub);line-height:1.1;color:var(--ink-900)">Lectura de carta natal</p>
+<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:1rem">
+<a href="{{ buyUrl }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;justify-content:center;min-height:56px;padding:0 2rem;border-radius:999px;background:var(--ink-900);color:var(--paper-000);font-size:28px;letter-spacing:.02em;transition:background-color 180ms var(--ease-out)" style-hover="background:var(--blue-900)">Solicitar una lectura</a>
+<a href="{{ bookingUrl }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;justify-content:center;min-height:56px;padding:0 2rem;border-radius:999px;border:1px solid var(--ink-900);color:var(--ink-900);font-size:28px;letter-spacing:.02em;transition:background-color 180ms var(--ease-out),color 180ms var(--ease-out)" style-hover="background:var(--ink-900);color:var(--paper-000)">Agendar sesión 1 a 1</a>
+</div>
+<figure style="margin:0;display:flex;flex-direction:column;align-items:center;gap:.5rem">
+<img src="assets/qr-lectura-carta-natal.png" alt="Código QR: Lectura Carta Natal" style="display:block;width:180px;height:auto;mix-blend-mode:multiply">
+</figure>
+<p style="margin:0;font-size:28px;letter-spacing:.06em;color:var(--ink-700)">@CruzAndinaAT</p>
+<ul aria-label="Redes sociales de Cruz Andina" style="list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:1rem">
+<sc-for list="{{ socials }}" as="so" hint-placeholder-count="4">
+<li><a href="{{ so.href }}" target="_blank" rel="noopener" aria-label="{{ so.name }} · @CruzAndinaAT" style="display:flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:50%;border:1px solid var(--border-strong);color:var(--ink-900);transition:background-color 180ms var(--ease-out),color 180ms var(--ease-out)" style-hover="background:var(--ink-900);color:var(--paper-000)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" style="fill:currentColor"><path d="{{ so.d }}"></path></svg></a></li>
+</sc-for>
+</ul>
+</div>
+<a href="#cap-00" style="display:inline-flex;align-items:center;gap:8px;min-height:44px;margin-top:1rem;font-size:28px;letter-spacing:.06em;color:var(--ink-700)" style-hover="color:var(--ink-900)">↑ Volver al umbral</a>
+</footer>
+</section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;bookingUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://calendly.com/cruzandinaat/lectura-carta-natal&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contacto&quot;}}">
+const REPORT = {
+  chapters: [
+    { n: '00', label: 'Umbral', id: 'cap-00' },
+    { n: '01', label: 'El movimiento central', id: 'cap-01' },
+    { n: '02', label: 'Tu voz y la respuesta', id: 'cap-02' },
+    { n: '03', label: 'Tres fuerzas', id: 'cap-03' },
+    { n: '04', label: 'El circuito', id: 'cap-04' },
+    { n: '05', label: 'Tu brújula', id: 'cap-05' },
+    { n: '06', label: 'Cerrar el ciclo', id: 'cap-06' },
+    { n: '07', label: 'Contacto', id: 'cap-07' }
+  ],
+  evidence: {
+    ev0: [
+      { punto: 'Ascendente RS', signo: 'Leo', casa: '—', natal: '8', relacion: 'Regente: el Sol' },
+      { punto: 'Sol', signo: 'Libra', casa: '3', natal: '11', relacion: 'Trígono con la Luna' },
+      { punto: 'Luna', signo: 'Géminis', casa: '11', natal: '6', relacion: 'Trígono con el Sol' }
+    ],
+    ev1: [
+      { punto: 'Plutón RS', signo: '—', casa: '6', natal: '2', relacion: 'Oposición al Ascendente · cuadratura al Medio Cielo' },
+      { punto: 'Marte', signo: 'Escorpio', casa: '4', natal: '11', relacion: 'Conjunto a Plutón natal' }
+    ],
+    ev2: [
+      { punto: 'Mercurio RS', signo: 'Escorpio', casa: '4', natal: '11', relacion: 'Cuadratura al Ascendente' },
+      { punto: 'Urano · Neptuno · Plutón', signo: '—', casa: '—', natal: '—', relacion: 'Contactos estrechos con Mercurio natal en casa 10' }
+    ],
+    ev3: [
+      { punto: 'Venus', signo: 'Virgo', casa: '2', natal: '—', relacion: 'Oposición casi exacta a Saturno' },
+      { punto: 'Saturno', signo: 'Piscis', casa: '9', natal: '—', relacion: 'Oposición casi exacta a Venus' }
+    ]
+  },
+  loop: ['La obra se vuelve personal', 'La respuesta se vuelve juicio', 'Aumenta el control', 'Crecen las variables', 'Se mueve el estándar', 'Se aplaza el contacto'],
+  next: ['Pregunta precisa', 'Exposición delimitada', 'Respuesta útil', 'Ajuste concreto', 'Nueva versión'],
+  interventionAt: [0, 1, 3, 4],
+  narr: [
+    { k: 'El circuito', t: 'Una de las formas posibles del ciclo es esta:', b: '' },
+    { k: '01 · La obra se vuelve personal', t: 'Algo importante está cerca de recibir respuesta.', b: 'Como te representa…' },
+    { k: '02 · La respuesta se vuelve juicio', t: '…la respuesta importa más de lo habitual.', b: '' },
+    { k: '03 · Aumenta el control', t: 'Para reducir el riesgo, intentas comprender todas las variables.', b: '' },
+    { k: '04 · Crecen las variables', t: 'Cada variable abre otra posibilidad.', b: '' },
+    { k: '05 · Se mueve el estándar', t: 'El criterio aumenta. La versión mejora.', b: '' },
+    { k: '06 · Se aplaza el contacto', t: 'El momento de contacto se aleja.', b: '' },
+    { k: 'Lectura', t: 'No hay nada irracional en esa secuencia. Cada paso intenta proteger algo valioso.', b: 'El problema aparece en el resultado conjunto. La protección evita recibir la información que permitiría corregir el proceso.' },
+    { k: 'Conciencia', green: true, t: 'La conciencia puede intervenir en distintos puntos.', b: 'No hace falta esperar hasta el final del circuito.', items: [
+      'Cuando la obra se vuelve personal, puede separarse el valor de la pieza del valor de quien la hizo.',
+      'Cuando la respuesta se siente como juicio, puede definirse una pregunta más precisa.',
+      'Cuando aumentan las variables, puede fijarse la escala de la prueba.',
+      'Cuando el estándar se mueve, puede regresar a la condición de cierre acordada antes de revisar.'
+    ] },
+    { k: 'Otro movimiento', green: true, t: 'Así aparece otro movimiento:', b: 'Pregunta precisa → exposición delimitada → respuesta útil → ajuste concreto → nueva versión.' },
+    { k: 'Otro movimiento', green: true, t: 'La diferencia no está en tener más confianza.', b: 'Está en diseñar mejor el encuentro con la realidad.' }
+  ],
+  compass: [
+    { q: 'Cuando pidas una opinión', rest: ' si existe una pregunta concreta. Sin ella, la respuesta hablará de muchas cosas a la vez y será difícil saber qué hacer con lo recibido.' },
+    { q: 'Cuando un detalle cambie el proyecto completo', rest: ' la escala. Tal vez el detalle sea estructural. Tal vez una gran cantidad de energía esté trabajando sobre una unidad demasiado pequeña.' },
+    { q: 'Cuando una idea parezca explicar todo', rest: ' qué parte proviene de evidencia y qué parte proviene de su capacidad para entusiasmarte. Ambas importan. No cumplen la misma función.' },
+    { q: 'Cuando una versión vuelva a no estar lista', rest: ' si la condición de cierre fue definida antes de revisar o apareció como respuesta al miedo de recibir contacto.' },
+    { q: 'Cuando una conversación permanezca dentro del taller', rest: ' qué cambió: la obra, tu comprensión de ella o solamente tu confianza. Cada cambio pide una respuesta diferente.' }
+  ],
+  steps: [
+    { t: 'Nombra lo que querías poner en el mundo.', b: 'Escríbelo en una frase, sin explicar todavía por qué fue difícil.' },
+    { t: 'Separa protección de postergación.', b: 'Anota qué parte necesitaba madurar en privado y qué parte ya podía recibir una mirada externa.' },
+    { t: 'Formula una sola pregunta.', b: 'Completa: “Antes de seguir trabajando, necesito comprobar si…”. Esa frase define qué información buscas.', field: true },
+    { t: 'Diseña una prueba pequeña.', b: 'Elige un fragmento, una persona adecuada y una pregunta específica. Comparte solamente lo necesario para obtener esa respuesta.' },
+    { t: 'Cierra una versión.', b: 'Después de la prueba, decide qué conservar, qué ajustar y qué dejar para más adelante. Haz un cambio concreto y declara esa versión terminada.' }
+  ],
+  acuerdos: [
+    'Definir qué significa “terminado” antes de comenzar una revisión.',
+    'Distinguir en tus notas entre dato, interpretación, deseo y pregunta.',
+    'Pedir respuestas sobre una función concreta de la obra, no sobre tu valor ni sobre el valor total del proyecto.'
+  ]
+};
+const STORE = 'ca-rs-2025-practica';
+const STEPS = 11;
+const SOCIALS = [
+  { name: 'Instagram', href: 'https://www.instagram.com/cruzandinaat', d: 'M12 2.2c3.2 0 3.6 0 4.8.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2M12 0C8.7 0 8.3 0 7.1.1 5.8.1 4.9.3 4.1.6c-.8.3-1.5.7-2.1 1.4C1.3 2.6.9 3.3.6 4.1.3 4.9.1 5.8.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c.1 1.3.3 2.2.6 2.9.3.8.7 1.5 1.4 2.1.7.7 1.3 1.1 2.1 1.4.8.3 1.6.5 2.9.6 1.2.1 1.6.1 4.9.1s3.7 0 4.9-.1c1.3-.1 2.2-.3 2.9-.6.8-.3 1.5-.7 2.1-1.4.7-.7 1.1-1.3 1.4-2.1.3-.8.5-1.6.6-2.9.1-1.2.1-1.6.1-4.9s0-3.7-.1-4.9c-.1-1.3-.3-2.2-.6-2.9-.3-.8-.7-1.5-1.4-2.1C21.4 1.3 20.7.9 19.9.6 19.1.3 18.2.1 16.9.1 15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 100 12.4 6.2 6.2 0 000-12.4zM12 16a4 4 0 110-8 4 4 0 010 8zm6.4-11.8a1.4 1.4 0 100 2.9 1.4 1.4 0 000-2.9z' },
+  { name: 'TikTok', href: 'https://www.tiktok.com/@cruzandinaat', d: 'M16.6 0h-3.9v16.3c0 1.9-1.6 3.5-3.5 3.5s-3.5-1.6-3.5-3.5 1.5-3.5 3.4-3.5c.4 0 .7 0 1 .1V8.9c-.3 0-.7-.1-1-.1C5 8.8 1.6 12.2 1.6 16.3S5 23.9 9.2 23.9s7.5-3.4 7.5-7.6V8c1.5 1.1 3.4 1.8 5.4 1.8V5.9c-3 0-5.5-2.6-5.5-5.9z' },
+  { name: 'YouTube', href: 'https://www.youtube.com/@cruzandinaat', d: 'M23.5 6.2c-.3-1-1.1-1.8-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5c-1 .3-1.8 1.1-2.1 2.1C0 8.1 0 12 0 12s0 3.9.5 5.8c.3 1 1.1 1.8 2.1 2.1 1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5c1-.3 1.8-1.1 2.1-2.1.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z' },
+  { name: 'Facebook', href: 'https://www.facebook.com/cruzandinaat', d: 'M24 12.1C24 5.4 18.6 0 12 0S0 5.4 0 12.1c0 6 4.4 11 10.1 11.9v-8.4H7.1v-3.5h3V9.4c0-3 1.8-4.7 4.5-4.7 1.3 0 2.7.2 2.7.2v3h-1.5c-1.5 0-2 .9-2 1.9v2.3h3.3l-.5 3.5h-2.8V24C19.6 23.1 24 18.1 24 12.1z' }
+];
+const SC = ['var(--blue-500)','var(--red-500)','var(--green-900)','var(--gold-900)','var(--blue-900)'];
+const PHASE = ['var(--red-100)','var(--gold-100)','var(--blue-100)','var(--red-500)','var(--gold-500)','var(--blue-500)'];
+
+class Component extends DCLogic {
+  state = { chapter: 0, step: 0, light: false, mobile: false, reduced: false, navOpen: false, open: { 0: true }, done: {}, question: '' };
+  rootRef = React.createRef();
+  chartRef = React.createRef();
+  circuitRef = React.createRef();
+  shiftRef = React.createRef();
+  footerRef = React.createRef();
+
+  componentDidMount() {
+    this._mq = window.matchMedia('(max-width: 760px)');
+    this._rm = window.matchMedia('(prefers-reduced-motion: reduce)');
+    this._wq = window.matchMedia('(min-width: 1200px)');
+    this._upd = () => this.setState({ mobile: this._mq.matches, wide: this._wq.matches, reduced: this._rm.matches }, () => this.tick());
+    this._upd();
+    this._mq.addEventListener('change', this._upd);
+    this._wq.addEventListener('change', this._upd);
+    this._rm.addEventListener('change', this._upd);
+    try {
+      const s = JSON.parse(localStorage.getItem(STORE) || '{}');
+      this.setState({ done: s.done || {}, question: s.question || '' });
+    } catch (e) {}
+    this._onScroll = () => {
+      if (this._raf) return;
+      this._raf = requestAnimationFrame(() => { this._raf = 0; this.tick(); });
+    };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    window.addEventListener('resize', this._onScroll);
+    setTimeout(() => this.setupReveal(), 60);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this._onScroll);
+    window.removeEventListener('resize', this._onScroll);
+    this._mq && this._mq.removeEventListener('change', this._upd);
+    this._rm && this._rm.removeEventListener('change', this._upd);
+    this._io && this._io.disconnect();
+  }
+
+  setupReveal() {
+    const root = this.rootRef.current;
+    if (!root || this._rm.matches || !('IntersectionObserver' in window)) return;
+    const ease = 'cubic-bezier(.4,0,.2,1)';
+    root.querySelectorAll('[data-intro]').forEach(el => {
+      const d = +el.getAttribute('data-intro') || 0;
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(10px)';
+      el.style.transition = `opacity 1100ms ${ease} ${d}ms, transform 1200ms ${ease} ${d}ms`;
+      requestAnimationFrame(() => requestAnimationFrame(() => { el.style.opacity = '1'; el.style.transform = 'none'; }));
+    });
+    const chart = this.chartRef.current;
+    if (chart) {
+      chart.style.opacity = '0';
+      chart.style.transition = `opacity 2200ms ${ease} 200ms`;
+      requestAnimationFrame(() => requestAnimationFrame(() => { chart.style.opacity = ''; this.tick(); }));
+      setTimeout(() => { chart.style.transition = ''; }, 2600);
+    }
+    this._io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'none';
+        this._io.unobserve(e.target);
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.06 });
+    const vh = window.innerHeight;
+    root.querySelectorAll('[data-reveal]').forEach(el => {
+      if (el.getBoundingClientRect().top < vh * 0.9) return;
+      const d = +el.getAttribute('data-reveal') || 0;
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(14px)';
+      el.style.transition = `opacity 800ms ${ease} ${d}ms, transform 900ms ${ease} ${d}ms`;
+      this._io.observe(el);
+    });
+  }
+
+  tick() {
+    const root = this.rootRef.current;
+    if (!root) return;
+    const vh = window.innerHeight;
+    let chapter = 0;
+    root.querySelectorAll('[data-chapter]').forEach(s => {
+      if (s.getBoundingClientRect().top < vh * 0.45) chapter = +s.getAttribute('data-chapter');
+    });
+    let step = this.state.step;
+    const c = this.circuitRef.current;
+    if (c) {
+      const r = c.getBoundingClientRect();
+      const p = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height - vh)));
+      step = Math.min(STEPS - 1, Math.floor(p * STEPS));
+    }
+    let light = this.state.light;
+    const sh = this.shiftRef.current;
+    if (sh) { const r = sh.getBoundingClientRect(); light = r.top + r.height / 2 < vh * 0.5; }
+    const chart = this.chartRef.current;
+    if (chart && !this.state.reduced) {
+      const p = Math.min(1, Math.max(0, window.scrollY / vh));
+      chart.style.transform = `translate(-50%,-50%) translateY(${p * -6}%) scale(${1 + p * 0.07})`;
+      if (!chart.style.transition) chart.style.opacity = String(1 - p * 0.6);
+    }
+    const ft = this.footerRef.current;
+    const footer = !!ft && ft.getBoundingClientRect().top < vh;
+    if (chapter !== this.state.chapter || step !== this.state.step || light !== this.state.light || footer !== !!this.state.footer) this.setState({ chapter, step, light, footer });
+  }
+
+  persist(patch) {
+    this.setState(patch, () => {
+      try { localStorage.setItem(STORE, JSON.stringify({ done: this.state.done, question: this.state.question })); } catch (e) {}
+    });
+  }
+
+  circuit() {
+    const m = !this.state.wide, st = m ? 8 : this.state.step, B = st >= 9;
+    const R = 33;
+    const rad = a => a * Math.PI / 180;
+    const pos = (a, r) => ({ x: 50 + r * Math.cos(rad(a)), y: 50 + r * Math.sin(rad(a)) });
+    const spA = t => -90 + 72 * t, spR = t => 9 + 11 * t;
+    const nodes = REPORT.loop.map((lab, i) => {
+      const bi = Math.min(i, 4);
+      const ang = B ? spA(bi) : -90 + 60 * i;
+      const p = B ? pos(ang, spR(bi)) : pos(ang, R);
+      const lit = B ? i < 5 : st >= i + 1;
+      const cur = !B && st === i + 1;
+      const inter = st === 8 && REPORT.interventionAt.includes(i);
+      const cs = Math.cos(rad(ang)), sn = Math.sin(rad(ang));
+      const W = m ? 2.5 : 8;
+      let lx, ly, ta;
+      let lt;
+      if (cs > 0.35) { lx = '18px'; lt = 'translateY(-50%)'; ta = 'left'; }
+      else if (cs < -0.35) { lx = '-18px'; lt = 'translate(-100%,-50%)'; ta = 'right'; }
+      else { lx = '0'; lt = sn < 0 ? 'translate(-50%, calc(-100% - 18px))' : 'translate(-50%, 18px)'; ta = 'center'; }
+      const green = 'var(--green-500)'; const pc = PHASE[i];
+      return {
+        x: p.x + '%', y: p.y + '%',
+        op: B && i === 5 ? 0 : 1,
+        size: cur ? '16px' : (B && i === 4 ? '14px' : '10px'),
+        fill: B ? green : (lit ? pc : 'var(--ink-900)'),
+        stroke: B ? green : (lit ? pc : 'var(--ink-300)'),
+        halo: inter ? green : 'transparent',
+        lx, lt, ta,
+        num: String(B ? bi + 1 : i + 1).padStart(2, '0'),
+        numColor: B ? green : (inter ? green : (lit ? pc : 'var(--ink-300)')),
+        color: lit ? 'var(--paper-000)' : 'var(--ink-300)',
+        labelDisplay: m ? 'none' : 'grid',
+        loopLabel: lab, nextLabel: REPORT.next[i] || '',
+        loopOp: B ? 0 : 1, nextOp: B ? 1 : 0
+      };
+    });
+    let d = '', len = 0, prev = null;
+    for (let t = -0.35; t <= 4.9; t += 0.05) {
+      const q = pos(spA(t), spR(t));
+      d += (prev ? 'L' : 'M') + q.x.toFixed(2) + ' ' + q.y.toFixed(2) + ' ';
+      if (prev) len += Math.hypot(q.x - prev.x, q.y - prev.y);
+      prev = q;
+    }
+    const C = 2 * Math.PI * R;
+    const drawn = B ? 1 : Math.min(st, 6) / 6;
+    return {
+      nodes, ringR: R, ringC: C.toFixed(2),
+      ringOffset: (C * (1 - drawn)).toFixed(2),
+      ringSegs: PHASE.map((c, i) => { const seg = C / 6; return { c, rot: 'rotate(' + (-90 + 60 * i) + ' 50 50)', dash: seg.toFixed(2) + ' ' + C.toFixed(2), off: (B || st >= i + 1) ? 0 : seg.toFixed(2) }; }),
+      ringOpacity: B ? 0.3 : (st >= 7 ? 0.7 : 1),
+      spiralD: d.trim(), spiralLen: len.toFixed(2), spiralOffset: B ? 0 : len.toFixed(2),
+      narr: REPORT.narr.map((n, i) => ({
+        k: n.k, t: n.t, b: n.b, items: n.items || [],
+        kColor: n.green ? 'var(--green-500)' : (i >= 1 && i <= 6 ? PHASE[i - 1] : 'var(--ink-300)'),
+        op: (m || i === st) ? 1 : 0, ty: (m || i === st) ? '0px' : (i < st ? '-12px' : '12px'),
+        hidden: (m || i === st) ? 'false' : 'true', area: m ? 'auto' : '1 / 1', align: m ? 'start' : 'center'
+      })),
+      stepDots: Array.from({ length: STEPS }, (_, i) => ({
+        w: i === st ? '22px' : '8px',
+        c: i <= st ? (i >= 8 ? 'var(--green-500)' : 'var(--paper-000)') : 'rgba(250,249,246,.2)'
+      }))
+    };
+  }
+
+  renderVals() {
+    const s = this.state, m = s.mobile, L = s.light;
+    const cur = REPORT.chapters[s.chapter] || REPORT.chapters[0];
+    const navItems = REPORT.chapters.map((c, i) => {
+      const on = i === s.chapter;
+      return {
+        ...c, aria: `${c.n} ${c.label}`, current: on ? 'true' : 'false',
+        color: on ? (L ? 'var(--ink-900)' : 'var(--paper-000)') : (L ? 'var(--ink-500)' : 'var(--ink-300)'),
+        hover: L ? 'var(--ink-900)' : 'var(--paper-000)',
+        tick: on ? '14px' : '6px', weight: on ? 600 : 400
+      };
+    });
+    return {
+      rootRef: this.rootRef, footerRef: this.footerRef, brandLeft: s.wide ? '1.5rem' : '12px', brandOp: s.footer ? 0 : 1, brandPe: s.footer ? 'none' : 'auto', chartRef: this.chartRef, circuitRef: this.circuitRef, shiftRef: this.shiftRef,
+      mobile: m, desktop: !m, railNav: !!s.wide, railPad: s.wide ? '25rem' : '0', tfWide: !!s.wide, tfNarrow: !s.wide, buttonNav: !s.wide,
+      bg: L ? 'var(--paper-050)' : 'var(--ink-900)',
+      navItems, curNum: cur.n, curLabel: cur.label,
+      bookingUrl: this.props.bookingUrl || 'https://calendly.com/cruzandinaat/lectura-carta-natal',
+      buyUrl: this.props.buyUrl || 'https://www.paypal.com/ncp/payment/Z6XTNNVQQTANL',
+      socials: SOCIALS,
+      navOpen: s.navOpen, navOpenStr: s.navOpen ? 'true' : 'false',
+      openNav: () => this.setState({ navOpen: true }),
+      closeNav: () => this.setState({ navOpen: false }),
+      navBg: L ? 'var(--paper-000)' : 'var(--ink-900)',
+      navInk: L ? 'var(--ink-900)' : 'var(--paper-000)',
+      navDim: L ? 'var(--ink-500)' : 'var(--ink-300)',
+      navBorder: L ? 'var(--paper-200)' : 'rgba(250,249,246,.18)',
+      chartLeft: m ? '64%' : '76%', chartTop: m ? '30%' : '46%', chartSize: m ? '76vw' : 'min(70svh, 42vw)',
+      colWide: m ? '1 / -1' : '1 / span 10',
+      colText: m ? '1 / -1' : '6 / span 7',
+      colLedger: '1 / -1',
+      colLedgerText: m ? '1 / -1' : '1 / span 9',
+      stickyPos: m ? 'static' : 'sticky',
+      ledgerCols: !s.wide ? '1fr 1fr 1fr' : '1.3fr .8fr .8fr .8fr 1.7fr',
+      relSpan: !s.wide ? '1 / -1' : 'auto', ledgerMobile: !s.wide, ledgerDesktop: !!s.wide,
+      ...this.ev(),
+      ...this.circuit(),
+      circuitHeight: !s.wide ? 'auto' : '760svh', ...this.stage(!s.wide),
+      compass: REPORT.compass.map((c, i) => {
+        const o = !!s.open[i];
+        return {
+          ...c, n: String(i + 1).padStart(2, '0'), pid: 'brujula-' + (i + 1),
+          expanded: o ? 'true' : 'false', rows: o ? '1fr' : '0fr', sign: o ? '−' : '+',
+          toggle: () => this.setState(st => ({ open: { ...st.open, [i]: !st.open[i] } }))
+        };
+      }),
+      steps: REPORT.steps.map((x, i) => {
+        const d = !!s.done[i];
+        return {
+          ...x, field: !!x.field,
+          mark: d ? '✓' : String(i + 1),
+          pressed: d ? 'true' : 'false',
+          aria: `Paso ${i + 1}: ${x.t} ${d ? '(recorrido)' : ''}`,
+          bg: d ? SC[i % 5] : 'transparent', fg: d ? 'var(--paper-000)' : 'var(--ink-900)',
+          border: SC[i % 5],
+          toggle: () => this.persist({ done: { ...this.state.done, [i]: !this.state.done[i] } })
+        };
+      }),
+      stepsIndent: m ? '0' : 'clamp(0rem,20vw,24rem)',
+      question: s.question,
+      onQuestion: e => this.persist({ question: e.target.value }),
+      acuerdos: REPORT.acuerdos.map((t, i) => ({ t, n: 'Acuerdo ' + (i + 1), c: ['var(--blue-500)','var(--red-500)','var(--green-900)'][i] }))
+    };
+  }
+
+  ev() {
+    const P={Sol:'sol',Luna:'luna',Mercurio:'mercurio',Venus:'venus',Marte:'marte',Júpiter:'jupiter',Saturno:'saturno',Urano:'urano',Neptuno:'neptuno',Plutón:'pluton',Quirón:'quiron'};
+    const Z={Aries:'aries',Tauro:'tauro',Géminis:'geminis',Cáncer:'cancer',Leo:'leo',Virgo:'virgo',Libra:'libra',Escorpio:'escorpio',Sagitario:'sagitario',Capricornio:'capricornio',Acuario:'acuario',Piscis:'piscis'};
+    const mk=(dir,slug)=>({ mask:'url(assets/astrology/'+dir+'/glyph/'+slug+'.svg) center / contain no-repeat' });
+    const out={};
+    for (const k in REPORT.evidence) out[k]=REPORT.evidence[k].map(r=>({ ...r,
+      pIcons: r.punto.replace(/ RS$/,'').split(' · ').filter(w=>P[w]).map(w=>mk('planets',P[w])),
+      sIcons: Z[r.signo] ? [mk('zodiac',Z[r.signo])] : [] }));
+    return out;
+  }
+  stage(c) {
+    return {
+      stageDir: c ? 'column' : 'row-reverse',
+      stagePad: c ? '2rem var(--gutter) 3rem' : '0 var(--gutter)',
+      stageJustify: c ? 'flex-start' : 'center',
+      stageGap: c ? '42px' : 'clamp(1rem,2vw,2.5rem)',
+      dSize: c ? 'min(56vw, 320px)' : 'max(220px, min(46svh, calc(100vw - 25rem - 12vw - min(34rem, 30vw) - 2.5rem - 42rem), 400px))',
+      dMargin: c ? '0' : '21rem',
+      narrFlex: c ? '0 1 auto' : '0 0 auto',
+      narrW: c ? 'min(36rem,100%)' : 'min(34rem, 30vw)',
+      stagePos: c ? 'relative' : 'sticky', stageH: c ? 'auto' : '100svh',
+      dotsDisplay: c ? 'none' : 'flex', narrGap: c ? '2.5rem' : '0',
+      narrTitle: c ? '1.75rem' : 'clamp(2rem,2.8vw,3rem)',
+      narrBody: c ? '28px' : '28px',
+      narrItem: c ? '28px' : '28px',
+      narrKMargin: c ? '.5rem' : '1rem',
+      progOrder: c ? '0' : '1'
+    };
+  }
+}
+</script>
+</body>
+</html>

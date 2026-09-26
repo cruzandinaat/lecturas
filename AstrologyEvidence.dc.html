@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/cruz-andina-design-system-9e29b00d-83c2-4ff6-b907-f9d2bb6bc278/styles.css">
+<script src="_ds/cruz-andina-design-system-9e29b00d-83c2-4ff6-b907-f9d2bb6bc278/_ds_bundle.js"></script>
+</helmet>
+<div role="table" aria-label="Arquitectura astrológica" style="font-family:var(--font-sans-body);color:var(--paper-000);border-top:1px solid rgba(250,249,246,.28)">
+<div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:.5rem 1rem;padding:22px 0 18px;font-size:28px;letter-spacing:.16em;text-transform:uppercase">
+<span style="color:var(--blue-100)">Arquitectura astrológica</span>
+<span style="color:var(--ink-300)">{{ caption }}</span>
+</div>
+<sc-if value="{{ desktop }}" hint-placeholder-val="{{ true }}">
+<div role="row" style="display:grid;grid-template-columns:1.3fr .8fr .8fr .8fr 1.7fr;gap:1rem;padding:14px 0;border-top:1px solid rgba(250,249,246,.1);font-size:28px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-300)">
+<span role="columnheader">Planeta · función</span>
+<span role="columnheader">Signo · energía</span>
+<span role="columnheader">Casa del ciclo</span>
+<span role="columnheader">Sobre casa natal</span>
+<span role="columnheader">Aspecto · relación</span>
+</div>
+</sc-if>
+<sc-for list="{{ rows }}" as="r" hint-placeholder-count="2">
+<div role="row" style="display:grid;grid-template-columns:{{ cols }};gap:1.1rem 1.5rem;padding:26px 0;border-top:1px solid rgba(250,249,246,.1);font-size:28px;line-height:1.5;color:var(--paper-100)">
+<div role="cell" style="grid-column:{{ relSpan }}">
+<sc-if value="{{ mobile }}" hint-placeholder-val="{{ false }}"><span style="display:block;margin-bottom:8px;font-size:28px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-300)">Planeta · función</span></sc-if>
+<span style="display:flex;flex-wrap:wrap;align-items:center;gap:.5rem .75rem"><span style="display:flex;gap:.4rem"><sc-for list="{{ r.pIcons }}" as="ic" hint-placeholder-count="1"><span aria-hidden="true" style="display:block;flex:none;width:32px;height:32px;background-color:var(--gold-100);-webkit-mask:{{ ic.mask }};mask:{{ ic.mask }}"></span></sc-for></span><span style="font-family:var(--font-serif-display);font-size:30px;line-height:1.2;color:var(--paper-000)">{{ r.punto }}</span></span>
+</div>
+<div role="cell">
+<sc-if value="{{ mobile }}" hint-placeholder-val="{{ false }}"><span style="display:block;margin-bottom:8px;font-size:28px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-300)">Signo</span></sc-if>
+<span style="display:flex;align-items:center;gap:.6rem"><sc-for list="{{ r.sIcons }}" as="ic" hint-placeholder-count="0"><span aria-hidden="true" style="display:block;flex:none;width:28px;height:28px;background-color:var(--blue-100);-webkit-mask:{{ ic.mask }};mask:{{ ic.mask }}"></span></sc-for><span>{{ r.signo }}</span></span>
+</div>
+<div role="cell">
+<sc-if value="{{ mobile }}" hint-placeholder-val="{{ false }}"><span style="display:block;margin-bottom:8px;font-size:28px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-300)">Casa del ciclo</span></sc-if>
+<span>{{ r.casa }}</span>
+</div>
+<div role="cell">
+<sc-if value="{{ mobile }}" hint-placeholder-val="{{ false }}"><span style="display:block;margin-bottom:8px;font-size:28px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-300)">Sobre casa natal</span></sc-if>
+<span>{{ r.natal }}</span>
+</div>
+<div role="cell" style="grid-column:{{ relSpan }}">
+<sc-if value="{{ mobile }}" hint-placeholder-val="{{ false }}"><span style="display:block;margin-bottom:8px;font-size:28px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-300)">Aspecto · relación</span></sc-if>
+<span>{{ r.relacion }}</span>
+</div>
+</div>
+</sc-for>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:900,&quot;height&quot;:320},&quot;rows&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;{punto:string,signo:string,casa:string,natal:string,relacion:string}[]&quot;,&quot;default&quot;:[{&quot;punto&quot;:&quot;Sol&quot;,&quot;signo&quot;:&quot;Libra&quot;,&quot;casa&quot;:&quot;3&quot;,&quot;natal&quot;:&quot;11&quot;,&quot;relacion&quot;:&quot;Trígono Luna&quot;}]},&quot;caption&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Revolución Solar sobre carta natal&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;mobile&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;desktop&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;cols&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;1.3fr .8fr .8fr .8fr 1.7fr&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;relSpan&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;auto&quot;,&quot;tsType&quot;:&quot;string&quot;}}"></script>
+</body>
+</html>

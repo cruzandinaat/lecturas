@@ -1,0 +1,5 @@
+*{box-sizing:border-box}
+body{background:var(--surface-page);color:var(--text-primary);font-family:var(--font-sans-body);font-size:var(--text-body);line-height:var(--leading-body);margin:0}
+h1,h2,h3{font-family:var(--font-serif-display);font-weight:500;line-height:var(--leading-heading);margin:0}
+a{color:var(--accent-blue-deep);text-decoration:underline}
+a:hover{color:var(--accent-blue)}

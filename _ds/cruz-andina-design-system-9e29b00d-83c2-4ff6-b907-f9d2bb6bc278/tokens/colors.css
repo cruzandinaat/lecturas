@@ -1,0 +1,32 @@
+:root{
+/* Brand palette — sampled directly from the Cruz Andina chakana mark. 12 signs, 4 hue families × 3 tonal steps each. */
+--blue-100:#3f9fff;--blue-500:#006aff;--blue-900:#003c87;
+--green-100:#a0cf00;--green-500:#00b55c;--green-900:#006833;
+--red-100:#ff4b54;--red-500:#ff0020;--red-900:#c30000;
+--gold-100:#ffc748;--gold-500:#ffd800;--gold-900:#debb1d;
+
+/* Neutrals — cool, editorial, never earthy/beige-dominant */
+--ink-900:#15161a;--ink-700:#33353b;--ink-500:#6b6d74;--ink-300:#a9abb1;
+--paper-000:#faf9f6;--paper-050:#f3f1ec;--paper-100:#e9e5dc;--paper-200:#dcd7cc;
+
+/* Semantic aliases */
+--surface-page:var(--paper-000);
+--surface-card:var(--paper-050);
+--surface-inverse:var(--ink-900);
+--border-subtle:var(--paper-200);
+--border-strong:var(--ink-300);
+--text-primary:var(--ink-900);
+--text-secondary:var(--ink-500);
+--text-on-inverse:var(--paper-000);
+
+--accent-blue:var(--blue-500);
+--accent-green:var(--green-500);
+--accent-red:var(--red-500);
+--accent-gold:var(--gold-500);
+--accent-blue-deep:var(--blue-900);
+--accent-green-deep:var(--green-900);
+--accent-red-deep:var(--red-900);
+--accent-gold-deep:var(--gold-900);
+
+--focus-ring:var(--blue-500);
+}
